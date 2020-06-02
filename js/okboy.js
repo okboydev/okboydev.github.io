@@ -473,4 +473,5 @@ function createServiceOrder() {
   }
   //sendEmail(quantity, contactData, address, paymentType)
   makeRequest(data)
+  dataLayer.push({'event': 'realizopedido'})
 }

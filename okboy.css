@@ -942,3 +942,39 @@ span.name, span.phone{
         float: left;
     }
 }
+
+.footer {
+
+    text-align: center;
+    width: 100%;
+ 
+ }
+ .f1 {
+    color: #fff;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+}
+
+.f2 {
+    padding: 0;
+    margin: 0;
+}
+
+.f3 { 
+    padding: 0;
+    margin: 0;
+}
+ 
+.f1,
+.f2,
+.f3 { 
+   -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: right;
+    font-size: 12px;
+    padding: 0 8%;
+    min-width: 300px;
+    width: 33%;
+}

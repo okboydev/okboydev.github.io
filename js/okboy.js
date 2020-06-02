@@ -45,7 +45,7 @@ function populateTomorrowSchedule(){
   currentDate.setDate(currentDate.getDate() + 1);
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
-  var options = schedule.map(item => `<option value=${date[2]}-${date[1].padStart(2,'0')}-${date[0]}T${item.value}>${item.text}</option>`).join('\n')
+  var options = schedule.map(item => `<option value=${date[2]}-${date[1].padStart(2,'0')}-${date[0].padStart(2,'0')}T${item.value}>${item.text}</option>`).join('\n')
   const calendar = document.getElementById("timeframe")  
   calendar.innerHTML = options
 }

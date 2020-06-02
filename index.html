@@ -25,9 +25,9 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-PRLBWND');</script>
     <!-- End Google Tag Manager -->
-    <!-- <script>
+    <script>
         dataLayer = [];
-    </script> -->
+    </script>
 
 
 </head>
@@ -505,9 +505,13 @@
 
 
 <script>
+    inicioFormulario = function(){
+        dataLayer.push({'event': 'inicioFormularioPedido'});
+        mixpanel.track("abrió modal de orden");
+    }
     createOrder = function(){
         MicroModal.show('createorder',{
-            openTrigger: mixpanel.track("abrió modal de orden"), // [3]
+            openTrigger: inicioFormulario(), // [3]
             disableScroll: true, // [6]
             disableFocus: false, // [7]
         });

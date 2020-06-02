@@ -20,15 +20,18 @@ const schedule = [
 function populateTodaySchedule() {
   // Populate calendar when user select: today
   const currentDate = new Date()
+  console.log(currentDate);
   const hour = currentDate.getHours() + 2
   const datePart = currentDate.toLocaleDateString()
+  console.log('this is datepart= ' + datePart)
   const date = datePart.split('/')
+  console.log('this is date= '+ datePart)
   var hours = schedule.filter(function(item) {
     return item.numeric >= hour;
   });
   var options = ['<option value=\'\' disabled>Sin horarios disponibles</option>']
   if(hours.length > 0){
-    options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2,'0')}-${date[0]}T${item.value}>${item.text}</option>`).join('\n')
+    options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2,'0')}-${date[0].padStart(2,'0')}T${item.value}>${item.text}</option>`).join('\n')
   }
   const calendar = document.getElementById("timeframe")  
   calendar.innerHTML = options

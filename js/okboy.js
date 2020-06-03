@@ -218,7 +218,7 @@ function calculateDiscount(amount){
   if ( voucher ) {
     if( voucher.symbol === '$') {
       if(voucher.amount > 0) {
-        return { value: voucher.amount, byCupon: true }
+        return { value: voucher.amount, byCupon: true, code: voucher.code }
       }
     }
     if( voucher.symbol === '%') {

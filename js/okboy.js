@@ -320,6 +320,7 @@ function isValidServiceType(){
 function isValidPaymentMethod(){
   const paymentType = getPaymentType()
   if(paymentType){
+    mixpanel.track("Selecciono Forma de Pago", {"Forma de Pago": paymentType});
     return true
   }
   return false
@@ -328,6 +329,7 @@ function isValidPaymentMethod(){
 function isValidSchedule(){
   const schedule = getSchedule()
   if(schedule) {
+    mixpanel.track("Selecciono Horario", {"Horario": schedule});
     return true
   }
   return false
@@ -336,6 +338,7 @@ function isValidSchedule(){
 function isValidQuantity() {
   const quantity = getQuantity()
   if (quantity > 0) {
+    mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": quantity});
     return true
   }
   return
@@ -344,6 +347,7 @@ function isValidQuantity() {
 function isValidContact() {
   const contactData = getContactInfo()
   if (contactData.name && contactData.phone) {
+    mixpanel.track("Lleno Datos de Contacto", {"Nombre": contactData.name,"Telefono": contactData.phone});
     return true
   }
   return false
@@ -352,6 +356,7 @@ function isValidContact() {
 function isValidAddress() {
   const address = getAddress()
   if (address.address) {
+    mixpanel.track("Selecciono Direccion", {"Dirección": address.address});
     return true
   }
   return false

@@ -478,7 +478,6 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toThree();
-                    mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": "Cantidad"});
                 }                
             }
             else if (step == 3){
@@ -487,7 +486,6 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toFour();
-                    mixpanel.track("Lleno Datos de Contacto", {"Nombre": "Nombre","Telefono": "Telefono"});
                 }                
             }
             else if (step == 4){
@@ -495,7 +493,6 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toFive();
-                    mixpanel.track("Selecciono Dirección y Horario", {"Dirección": "Nombre","Horario": "Telefono"});
                 }
                 
             }
@@ -504,8 +501,6 @@
                 step = step + 1;
                 removeonLSELEMENTS();
                 toSix();
-                mixpanel.track("Selecciono Forma de Pago", {"Forma de Pago": "Forma de Pago"});
-                
             }
             else if (step == 6){
                 createServiceOrder();

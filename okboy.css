@@ -943,11 +943,11 @@ span.name, span.phone{
     }
 }
 
-.footer {
 
+
+.footer {
     text-align: center;
     width: 100%;
- 
  }
  .f1 {
     color: #fff;
@@ -973,7 +973,7 @@ span.name, span.phone{
     box-sizing: border-box;
     display: inline-block;
     text-align: right;
-    font-size: 12px;
+    font-size: 14px;
     padding: 0 8%;
     min-width: 300px;
     width: 33%;

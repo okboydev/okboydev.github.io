@@ -461,7 +461,7 @@
                 // Mostrar oferta.
                 step = step + 1;
                 toOne();
-                mixpanel.track("vio oferta", {"paso": "Inicio Formulario de Pedido"});
+                mixpanel.track("Seleccióno Tipo de Gas", {"Tipo de Gas": "Estacionario"});
             }
             else if (step == 1){
                 // Seleccionar tipo de recarga
@@ -539,7 +539,7 @@
 <script>
     inicioFormulario = function(){
         dataLayer.push({'event': 'inicioformulariodepedido'});        
-        mixpanel.track("abrió modal de orden");
+        mixpanel.track("Abrio Modal de Pedido");
     }
     createOrder = function(){
         MicroModal.show('createorder',{

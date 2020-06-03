@@ -461,7 +461,7 @@
                 // Mostrar oferta.
                 step = step + 1;
                 toOne();
-                mixpanel.track("Seleccióno Tipo de Gas", {"Tipo de Gas": "Estacionario"});
+                mixpanel.track("Inicio Formulario de Pedido");
             }
             else if (step == 1){
                 // Seleccionar tipo de recarga
@@ -469,7 +469,7 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toTwo();
-                    // mixpanel.track("selecciono cantidad", {"paso": "Selecciono Cantidad"});
+                    mixpanel.track("Selecciono Tipo de Gas", {"Tipo de Gas": "Estacionario"});
                 }                                
             }
             else if (step == 2){
@@ -478,7 +478,7 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toThree();
-                    // mixpanel.track("datos de contacto", {"paso": "Selecciono Cantidad"});
+                    mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": "Cantidad"});
                 }                
             }
             else if (step == 3){
@@ -487,7 +487,7 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toFour();
-                    // mixpanel.track("dirección de envío", {"paso": "Selecciono Cantidad"});
+                    mixpanel.track("Lleno Datos de Contacto", {"Nombre": "Nombre","Telefono": "Telefono"});
                 }                
             }
             else if (step == 4){
@@ -495,7 +495,7 @@
                     step = step + 1;
                     removeonLSELEMENTS();
                     toFive();
-                    // mixpanel.track("eligió metodo de pago", {"paso": "Selecciono Cantidad"});
+                    mixpanel.track("Selecciono Dirección y Horario", {"Dirección": "Nombre","Horario": "Telefono"});
                 }
                 
             }
@@ -504,7 +504,7 @@
                 step = step + 1;
                 removeonLSELEMENTS();
                 toSix();
-                // mixpanel.track("eligió metodo de pago", {"paso": "Selecciono Cantidad"});
+                mixpanel.track("Selecciono Forma de Pago", {"Forma de Pago": "Forma de Pago"});
                 
             }
             else if (step == 6){
@@ -516,7 +516,7 @@
                 document.getElementById("nextbutton").classList.add('off');
                 toSeven();
                 setTimeout(toEight, 4500);
-                // mixpanel.track("eligió metodo de pago", {"paso": "Selecciono Cantidad"});
+                mixpanel.track("Llego al Resumen de Pedido");
             }
             /*
             else if (step == 7){

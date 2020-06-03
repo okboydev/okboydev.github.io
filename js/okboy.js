@@ -473,5 +473,6 @@ function createServiceOrder() {
   }
   //sendEmail(quantity, contactData, address, paymentType)
   makeRequest(data)
+  mixpanel.track("Realizo Pedido", {"Información de Pedido": data});
   dataLayer.push({'event': 'realizopedido'})
 }

@@ -395,17 +395,20 @@ setInputFilter(document.getElementById("phone"), function(value) {
 
 function getUrlService(){
   const dev = { 
-    url: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services',
+    urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/logs',
+    urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
-  const qa = { 
-    url: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1services',
+  const qa = {
+    urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/logs', 
+    urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1services',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
 
   const prod = {
-    url: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services',
+    urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/logs',
+    urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services',
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
@@ -417,12 +420,38 @@ function getUrlService(){
   return prod
 } 
 
+function registerEvent(key, data) {
+  console.log(data)
+  const service = getUrlService()
+  const body = JSON.stringify({
+      key,
+      data
+    })
+  fetch(service.urlEvents, {
+    mode: 'cors',
+    method: 'POST',
+    body: body,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': service.apikey
+    }
+  }).then(function (response) {
+    return response.text();
+  })
+    .then(function (data) {
+      console.log('data = ', data);
+    })
+    .catch(function (err) {
+      console.log('AN ERROR: ', data)
+      console.error("ERROR:", err);
+    });
+}
 
 function makeRequest(data) {
   const service = getUrlService()
   const body = JSON.stringify(data)
   console.log('BODY REQUEST: ', body)
-  fetch(service.url, {
+  fetch(service.urlService, {
     mode: 'cors',
     method: 'POST',
     body: body,
@@ -466,18 +495,22 @@ function createServiceOrder() {
       address: {
         state: address.state,
         street: address.street || address.address.substring(0,50),
-        municipality: address.locality,
-        suburb: address.sublocality,
+        municipality: address.locality || 'Unknown',
+        suburb: address.sublocality || 'Unknown',
         numExt: address.streetNumber || 'SN',
         //numInt: '',
         zipcode: address.zipCode || '00000',
-        longitude: address.longitude,
-        latitude: address.latitude
+        longitude: address.longitude || '00000000000',
+        latitude: address.latitude || '00000000000'
       }
     }
   }
-  //sendEmail(quantity, contactData, address, paymentType)
+  
   makeRequest(data)
   mixpanel.track("Realizo Pedido", {"Información de Pedido": data});
   dataLayer.push({'event': 'realizopedido'})
+
+  // Reg event
+  data.discount = discount
+  registerEvent('NEW_SERVICE', data)
 }

@@ -510,7 +510,11 @@ function createServiceOrder() {
   mixpanel.track("Realizo Pedido", {"Información de Pedido": data});
   dataLayer.push({'event': 'realizopedido'})
 
+  // Reg on fb.
+  fbq('track', 'CompleteRegistration', data);
+
   // Reg event
   data.discount = discount
-  registerEvent('NEW_SERVICE', data)
+  registerEvent('NEW_SERVICE', data) 
+
 }

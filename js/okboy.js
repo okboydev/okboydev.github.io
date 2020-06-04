@@ -493,7 +493,7 @@ function createServiceOrder() {
       phoneNumber: contactData.phone,
       deviceType: 'web',
       address: {
-        state: address.state,
+        state: address.state || 'Unknown',
         street: address.street || address.address.substring(0,50),
         municipality: address.locality || 'Unknown',
         suburb: address.sublocality || 'Unknown',

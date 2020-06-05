@@ -346,7 +346,7 @@ function isValidQuantity() {
 
 function isValidContact() {
   const contactData = getContactInfo()
-  if (contactData.name && contactData.phone) {
+  if (contactData.name && (contactData.phone && contactData.phone.length >= 10)) {
     mixpanel.track("Lleno Datos de Contacto", {"Nombre": contactData.name,"Telefono": contactData.phone});
     return true
   }

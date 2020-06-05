@@ -10,6 +10,7 @@ vouchers = {
   'CJ300': { amount: 300, symbol: '$' },
   'CES300': { amount: 300, symbol: '$' },
   'SAN300': { amount: 300, symbol: '$' },
+  'AID300': { amount: 300, symbol: '$' },
   'PEI-2001-200': { amount: 200, symbol: '$' },
   'PEI-2002-200': { amount: 200, symbol: '$' },
   'PEI-2003-200': { amount: 200, symbol: '$' },

@@ -350,6 +350,8 @@ function isValidContact() {
     mixpanel.track("Lleno Datos de Contacto", {"Nombre": contactData.name,"Telefono": contactData.phone});
     return true
   }
+  document.getElementById("name").required = true
+  document.getElementById("phone").required = true
   return false
 }
 
@@ -359,6 +361,7 @@ function isValidAddress() {
     mixpanel.track("Selecciono Direccion", {"Dirección": address.address});
     return true
   }
+  document.getElementById("address").required = true
   return false
 }
 

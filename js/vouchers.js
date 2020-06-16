@@ -1,7 +1,5 @@
 vouchers = {
   'MICH100': { amount: 100, symbol: '$' },
-  '100TV': { amount: 100, symbol: '$' },
-  '100YTUBE': { amount: 100, symbol: '$' },
   'YOU500': { amount: 250, symbol: '$' },
   'TREN300': { amount: 300, symbol: '$' },
   'WOW600': { amount: 200, symbol: '$' },
@@ -43,8 +41,6 @@ vouchers = {
   'PEI-2028-200': { amount: 200, symbol: '$' },
   'PEI-2029-200': { amount: 200, symbol: '$' },
   'PEI-2030-200': { amount: 200, symbol: '$' },
-  'PEI-0501-400': { amount: 400, symbol: '$' },
-  'PEI-0502-400': { amount: 400, symbol: '$' },
   'PEI-0503-400': { amount: 400, symbol: '$' },
   'PEI-0504-400': { amount: 400, symbol: '$' },
   'PEI-0505-400': { amount: 400, symbol: '$' },

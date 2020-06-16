@@ -1,4 +1,5 @@
 vouchers = {
+  'MICH100': { amount: 100, symbol: '$' },
   '100TV': { amount: 100, symbol: '$' },
   '100YTUBE': { amount: 100, symbol: '$' },
   'YOU500': { amount: 250, symbol: '$' },

@@ -66,7 +66,9 @@ async function getDataService(service) {
 }
 
 
-
+function toLocalTimeZone(date) {
+  return new Date(date).toLocaleString("es-MX", {timeZone: "America/Mexico_City"})
+}
 
 
 // The following example creates a marker in Stockholm, Sweden using a DROP
@@ -111,7 +113,7 @@ async function addProvidersToMap(map) {
           if (data) {
             const info = '<b>Nombre: </b> ' + data.name + '<br>' +
               '<b>Teléfono: </b>' + data.phoneNumber + '<br>' +
-              '<b>Ultima Actualización: </b>' + provider.updated_at
+              '<b>Ultima Actualización: </b>' + toLocalTimeZone(provider.updated_at)
             infowindow.setContent(info)
             infowindow.open(map, marker)
           }

@@ -123,7 +123,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
         <div class="cont">
             <div class="left">
                 <div class="fix"></div><div class="cta">
-                    <h1 style="text-transform:uppercase">Te conectamos con los mejores repartidores de gas en CDMX y GDL</h1>
+                    <h1 style="text-transform:uppercase">Te conectamos con los mejores repartidores de gas en CDMX y Área Metropolitana</h1>
                     <p>Olvídate de los malos tratos y retrasos, okboy trabaja solo con los mejores repartidores de las mejores marcas. 
                         Agenda hoy tu servicio y aprovecha las promociones que tenemos para ti.</p>
                     <button onclick="MicroModal.show('createorder')">Haz tu pedido aquí</button>
@@ -134,7 +134,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
         </div>
     </div>
     <div id="note">
-        🔥🔥🔥 Servicio disponible en CDMX, Área Metropolitana y GDL  🔥🔥🔥
+        🔥🔥🔥 Servicio disponible en CDMX y Área Metropolitana 🔥🔥🔥
     </div>
     <div id="apps">
         <h2>El control de tu servicio de gas en una app</h2>
@@ -293,9 +293,9 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="msfour" class="section">
                                     <div class="fix"></div><div class="inside" id="contact">
-                                        <span class="tit contactou qsection">¿A dónde lo llevamos?</span><br>
+                                        <span class="tit contactou qsection">¿A dónde lo llevamos?</span>
                                         <div style="text-align: left;">
-                                            <span class="phone">Dirección:</span><br>
+                                            <span class="phone">Dirección:</span>
                                             <input id="address" class="phone" type="text" placeholder="Ej: Campos Elisesos 322" aria-hidden="true"/>
                                             <input type="hidden" id="zipCode" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="latitude" class="phone" type="text" aria-hidden="true"/>
@@ -306,13 +306,15 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                             <input type="hidden" id="sublocality" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="streetNumber" class="phone" type="text" aria-hidden="true"/>
                                         </div>
-                                        <br/>
+                                        <div style="text-align: left;">
+                                            <span class="phone">Comentarios o referencias:</span>
+                                            <input id="reference" class="phone" type="text" placeholder="Ej: Fachada Azul" aria-hidden="true"/>
+                                        </div>
                                         <span class="tit contactou qsection">¿Cuándo lo necesitas?</span>                                        
                                         <input class="card" type="radio" id="hoy" name="day" value="{{hoy}}" aria-hidden="true">
                                         <label class="card" for="hoy">Hoy</label>
                                         <input class="card" type="radio" id="manana" name="day" value="{{manana}}" aria-hidden="true">
                                         <label class="card" for="manana">Mañana</label>
-                                        <br/> <br/>
                                         <span class="tit contactou qsection">¿En que horario?</span>                                        
                                         <select id="timeframe" name="timeframe" aria-hidden="true">
                                             <option>Selecciona un día</option>

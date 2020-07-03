@@ -157,11 +157,11 @@ function getDiscountByVoucherCode(){
  * Get contact information from screen.
  */
 function getContactInfo() {
-  const name = document.getElementById("name")
-  const phone = document.getElementById("phone")
+  const name = document.getElementById("name").value
+  const phone = document.getElementById("phone").value
   return {
-    name: name.value,
-    phone: phone.value
+    name,
+    phone
   }
 
 }
@@ -179,6 +179,7 @@ function getAddress() {
   const latitude = document.getElementById('latitude')
   const longitude = document.getElementById('longitude')
   const streetNumber = document.getElementById('streetNumber')
+  const reference = document.getElementById('reference')
   data = {
     address: address.value,
     street: street.value,
@@ -188,7 +189,8 @@ function getAddress() {
     state: state.value,
     zipCode: zipCode.value,
     latitude: latitude.value,
-    longitude: longitude.value    
+    longitude: longitude.value,
+    reference: reference.value
   }
   return data
 }
@@ -248,6 +250,7 @@ function showOrderSummary() {
   const quantity = getQuantity()
   const contactData = getContactInfo()
   const address = getAddress()
+  console.log(address)
   const paymentType = getPaymentType()
   const discount = calculateDiscount(quantity)
   const total = calculateTotalOfService(quantity, discount)
@@ -267,12 +270,16 @@ function showOrderSummary() {
   document.getElementById("nameValue").textContent = contactData.name
   document.getElementById("phoneValue").textContent = contactData.phone
   
+  var addressText = ""
   if (address.zipCode) {
-    document.getElementById("addressValue").textContent = address.address + ", CP. " + address.zipCode
+    addressText = address.address + ", CP. " + address.zipCode
   } else {
-    document.getElementById("addressValue").textContent = address.address
+    addressText = address.address
   }
-
+  if(address.reference) {
+    addressText = addressText + ". " + address.reference
+  }
+  document.getElementById("addressValue").textContent = addressText
   document.getElementById("paymentTypeValue").textContent = paymentType.value
 }
 
@@ -495,6 +502,7 @@ function createServiceOrder() {
     customerData: {
       phoneNumber: contactData.phone,
       deviceType: 'web',
+      name: contactData.name,
       address: {
         state: address.state || 'Unknown',
         street: address.street || address.address.substring(0,50),
@@ -504,7 +512,8 @@ function createServiceOrder() {
         //numInt: '',
         zipcode: address.zipCode || '00000',
         longitude: address.longitude || '00000000000',
-        latitude: address.latitude || '00000000000'
+        latitude: address.latitude || '00000000000',
+        reference: address.reference || ''
       }
     }
   }

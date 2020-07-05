@@ -512,10 +512,13 @@ function createServiceOrder() {
         //numInt: '',
         zipcode: address.zipCode || '00000',
         longitude: address.longitude || '00000000000',
-        latitude: address.latitude || '00000000000',
-        reference: address.reference || ''
+        latitude: address.latitude || '00000000000'
       }
     }
+  }
+  
+  if (address.reference) {
+    data.customerData.address.reference = address.reference
   }
   
   makeRequest(data)

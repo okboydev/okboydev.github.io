@@ -318,8 +318,10 @@ function isValidStep(step) {
 function isValidServiceType(){
   const serviceType = getServiceType()
   if( serviceType && serviceType === 'stationary'){
+      mixpanel.track("Selecciono Tipo de Gas Estacionario", {"Tipo de Gas": "Estacionario"});
       return true
   }
+  mixpanel.track("Selecciono Cilindro", {"Tipo de Gas": "Cilindro"});
   return false
 }
 

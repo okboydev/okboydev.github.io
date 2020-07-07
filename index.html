@@ -292,7 +292,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                     </div>
                                 </div>
                                 <div id="msfour" class="section">
-                                    <div class="fix"></div><div class="inside" id="contact">
+                                    <div class="fix"></div><div class="inside" id="addres">
                                         <span class="tit contactou qsection">¿A dónde lo llevamos?</span>
                                         <div style="text-align: left;">
                                             <span class="phone">Dirección:</span>
@@ -310,16 +310,28 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                             <span class="phone">Comentarios o referencias:</span>
                                             <input id="reference" class="phone" type="text" placeholder="Ej: Fachada Azul" aria-hidden="true"/>
                                         </div>
-                                        <span class="tit contactou qsection">¿Cuándo lo necesitas?</span>                                        
+                                        
+                                        <span class="tit contactou qsection">¿Cuándo y a que hora lo necesitas?</span>
+                                        <div style="text-align: left;">
+                                            <span class="phone">Fecha:</span>
+                                            <input id="dateOfService" class="phone" type="date" step="1" data-date-format="DD MMMM YYYY" aria-hidden="true"/>
+                                            <span class="phone">Horario:</span>
+                                            <select id="timeframe" name="timeframe" aria-hidden="true">
+                                                <option>Selecciona un día</option>
+                                            </select>
+                                            <br>
+                                            <!-- <input type="hidden" id="dayOfService" class="phone" type="text" aria-hidden="true"/> -->
+                                            <span style="font-weight: 600;">Quedará para:</span>&nbsp;<span id="schedule"></span>
+
+                                        </div>                    
+                                        <!--                                        
                                         <input class="card" type="radio" id="hoy" name="day" value="{{hoy}}" aria-hidden="true">
                                         <label class="card" for="hoy">Hoy</label>
                                         <input class="card" type="radio" id="manana" name="day" value="{{manana}}" aria-hidden="true">
                                         <label class="card" for="manana">Mañana</label>
+                                        
                                         <span class="tit contactou qsection">¿En que horario?</span>                                        
-                                        <select id="timeframe" name="timeframe" aria-hidden="true">
-                                            <option>Selecciona un día</option>
-                                        </select>
-                                        <input type="hidden" id="dayOfService" class="phone" type="text" aria-hidden="true"/>
+                                        -->
                                     </div>
                                 </div>    
                                 <div id="msfive" class="section">

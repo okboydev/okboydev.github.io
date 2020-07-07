@@ -1,18 +1,20 @@
-const ENV = 'prod'
+const ENV = 'dev'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 
 const schedule = [
-  { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8},
-  { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9},
-  { value: '11:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 10},
-  { value: '12:00:00', text: 'De: 11:00 am a 12:00 pm', numeric: 11},
-  { value: '13:00:00', text: 'De: 12:00 pm a 01:00 pm', numeric: 12},
-  { value: '14:00:00', text: 'De: 01:00 pm a 02:00 pm', numeric: 13},
-  { value: '15:00:00', text: 'De: 02:00 pm a 03:00 pm', numeric: 14},
-  { value: '16:00:00', text: 'De: 03:00 pm a 04:00 pm', numeric: 15},
-  { value: '17:00:00', text: 'De: 04:00 pm a 05:00 pm', numeric: 16}
+  { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
+  { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9 },
+  { value: '11:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 10 },
+  { value: '12:00:00', text: 'De: 11:00 am a 12:00 pm', numeric: 11 },
+  { value: '13:00:00', text: 'De: 12:00 pm a 01:00 pm', numeric: 12 },
+  { value: '14:00:00', text: 'De: 01:00 pm a 02:00 pm', numeric: 13 },
+  { value: '15:00:00', text: 'De: 02:00 pm a 03:00 pm', numeric: 14 },
+  { value: '16:00:00', text: 'De: 03:00 pm a 04:00 pm', numeric: 15 },
+  { value: '17:00:00', text: 'De: 04:00 pm a 05:00 pm', numeric: 16 }
 ]
+
+
 
 /**
  * Pupulate schedule
@@ -20,71 +22,170 @@ const schedule = [
 function populateTodaySchedule() {
   // Populate calendar when user select: today
   const currentDate = new Date()
-  console.log(currentDate);
   const hour = currentDate.getHours() + 2
   const datePart = currentDate.toLocaleDateString()
-  console.log('this is datepart= ' + datePart)
   const date = datePart.split('/')
-  console.log('this is date= '+ date)
-  var hours = schedule.filter(function(item) {
+  var hours = schedule.filter(function (item) {
     return item.numeric >= hour;
   });
-  var options = ['<option value=\'\' disabled>Sin horarios disponibles</option>']
-  if(hours.length > 0){
-    options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2,'0')}-${date[0].padStart(2,'0')}T${item.value}>${item.text}</option>`).join('\n')
+  var options = []
+  if (hours.length > 0) {
+    options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   }
-  const calendar = document.getElementById("timeframe")  
+  const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
+  return options
 }
 
 /**
- * Populate schedule for next day.
+ * Populate schedule for tomorrow day.
  */
-function populateTomorrowSchedule(){
+function populateTomorrowSchedule() {
   var currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + 1);
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
-  var options = schedule.map(item => `<option value=${date[2]}-${date[1].padStart(2,'0')}-${date[0].padStart(2,'0')}T${item.value}>${item.text}</option>`).join('\n')
-  const calendar = document.getElementById("timeframe")  
+  var options = schedule.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
+  const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
 }
 
-const tomorrow = document.getElementById("manana");
-tomorrow.onclick = function() {
-  const dayOfService = document.getElementById("dayOfService")
-  dayOfService.value = 'Mañana'
-  populateTomorrowSchedule() 
+function populateSchedule(currentDate) {
+  const date = currentDate.split('-')
+  var options = schedule.map(item => `<option value=${date[0]}-${date[1].padStart(2, '0')}-${date[2].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
+  const calendar = document.getElementById("timeframe")
+  calendar.innerHTML = options
 }
 
-const today = document.getElementById("hoy");
-today.onclick = function() {
-  const dayOfService = document.getElementById("dayOfService")
-  dayOfService.value = 'Hoy'
-  populateTodaySchedule()
+/**
+const tomorrow = document.getElementById("manana");
+if(tomorrow) {
+  tomorrow.onclick = function() {
+    const dayOfService = document.getElementById("dayOfService")
+    dayOfService.value = 'Mañana'
+    populateSchedule() 
+  }
 }
+const today = document.getElementById("hoy");
+if(today) {
+  today.onclick = function() {
+    const dayOfService = document.getElementById("dayOfService")
+    dayOfService.value = 'Hoy'
+    populateTodaySchedule()
+  }
+}
+
+ */
+
+function setScheduleText(dayText, hourText) {
+  const scheduleText = document.getElementById('schedule')
+  scheduleText.textContent = dayText + hourText
+}
+
+
+
+function getSchedule() {
+  const dayOfService = document.getElementById("dateOfService")
+  const options = document.getElementById("timeframe").querySelectorAll("option")
+  var selected = null
+  if (options) {
+    options.forEach(option => {
+      if (option.selected) {
+        selected = { day: dayOfService.value, text: option.text, value: option.value }
+      }
+    })
+  }
+  return selected
+}
+
+
+
+/** Init calendar */
+function dateToCustomString(date) {
+  const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+  const initDate = startDate.toLocaleDateString().split('/')
+  return `${initDate[2]}-${initDate[1].padStart(2, '0')}-${initDate[0].padStart(2, '0')}`
+}
+
+function getCurrentDateString() {
+  return dateToCustomString(new Date())
+}
+
+function getTomorrowDateString() {
+  var currentDate = new Date()
+  currentDate.setDate(currentDate.getDate() + 1)
+  return dateToCustomString(currentDate)
+}
+
+var dayText = ""
+const datePicker = document.getElementById("dateOfService")
+if (datePicker) {
+  const scheduleOption = populateTodaySchedule()
+  var currentDate = new Date();
+  if (scheduleOption.length < 1) {
+    currentDate.setDate(currentDate.getDate() + 1)
+    dayText = "Mañana, "
+    populateTomorrowSchedule()
+  } else {
+    dayText = "Hoy, "
+    populateTodaySchedule()
+  }
+  const initDateValue = dateToCustomString(currentDate)
+  datePicker.value = initDateValue
+  datePicker.min = initDateValue
+}
+
+var hourText = getSchedule().text
+setScheduleText(dayText, hourText)
+
+datePicker.onchange = function () {
+  const selectedDate = datePicker.value
+  if (selectedDate === getCurrentDateString()) {
+    console.log('Cargando horarios para hoy')
+    populateTodaySchedule()
+    dayText = "Hoy, "
+  } else if (selectedDate == getTomorrowDateString()) {
+    console.log('Cargando horarios para otro día.')
+    populateTomorrowSchedule()
+    dayText = 'Mañana, '
+  } else {
+    populateSchedule(selectedDate)
+    const selectedArray = selectedDate.split('-')
+    var selected = selectedArray[2] + '-' + selectedArray[1] + '-' + selectedArray [0] 
+    dayText = 'El ' + selected + ', '   
+  }
+  setScheduleText(dayText, hourText)
+}
+
+const calendar = document.getElementById("timeframe")
+calendar.onchange = function () {
+  var hourText = getSchedule().text
+  setScheduleText(dayText, hourText)
+}
+
+
 
 
 const cylinder = document.getElementById("cylinder");
-cylinder.onclick = function() {
+cylinder.onclick = function () {
   document.getElementById("serviceTypeLabel").hidden = false
   document.getElementById("nextbutton").textContent = 'Cerrar'
-  document.getElementById("nextbutton").onclick = function(){ MicroModal.close('createorder') }
+  document.getElementById("nextbutton").onclick = function () { MicroModal.close('createorder') }
 }
 
 const stationary = document.getElementById("stationary");
-stationary.onclick = function() {
+stationary.onclick = function () {
   document.getElementById("serviceTypeLabel").hidden = true
   document.getElementById("nextbutton").hidden = false
   document.getElementById("nextbutton").textContent = 'Continuar'
-  document.getElementById("nextbutton").onclick = function(){ toNEXT() }
+  document.getElementById("nextbutton").onclick = function () { toNEXT() }
 }
 const backButton = document.getElementById("backbutton")
-backButton.onclick = function() {
-  if(step === 1) {
+backButton.onclick = function () {
+  if (step === 1) {
     console.log('Entro')
     document.getElementById("nextbutton").textContent = 'Continuar'
-    document.getElementById("nextbutton").onclick = function(){ toNEXT() }
+    document.getElementById("nextbutton").onclick = function () { toNEXT() }
     toPREV()
   } else {
     toPREV()
@@ -120,34 +221,18 @@ function getQuantity() {
 }
 
 
-/**
- * 
- */
 
- function getSchedule() {
-  const dayOfService = document.getElementById("dayOfService") 
-  const options = document.getElementById("timeframe").querySelectorAll("option")
-  var selected = null
-  if(options){
-    options.forEach(option => {
-      if(option.selected){
-        selected = { day: dayOfService.value, text: option.text, value: option.value }
-      }
-    })
-  }
-  return selected
- }
 
 /**
  * Get discount by voucher code.
  */
-function getDiscountByVoucherCode(){
+function getDiscountByVoucherCode() {
   var discount = null;
   const field = document.getElementById("cuponCode")
-  if(field && field.value){
+  if (field && field.value) {
     const voucher = vouchers[field.value.toUpperCase()]
-    if(voucher){
-      discount =  { amount: voucher.amount, symbol: voucher.symbol, code: field.value }
+    if (voucher) {
+      discount = { amount: voucher.amount, symbol: voucher.symbol, code: field.value }
     }
   }
   return discount
@@ -174,7 +259,7 @@ function getAddress() {
   const street = document.getElementById("street")
   const sublocality = document.getElementById("sublocality")
   const locality = document.getElementById('locality')
-  const state = document.getElementById('state') 
+  const state = document.getElementById('state')
   const zipCode = document.getElementById('zipCode')
   const latitude = document.getElementById('latitude')
   const longitude = document.getElementById('longitude')
@@ -209,25 +294,25 @@ function getPaymentType() {
   if (paymentType === 'card') {
     return { type: 2, value: "Con Tarjeta" }
   }
-  return {type: 1, value: "En Efectivo"}
+  return { type: 1, value: "En Efectivo" }
 }
 
 /**
  * Get discount from cupon or discount for first buy.
  */
-function calculateDiscount(amount){
+function calculateDiscount(amount) {
   const voucher = getDiscountByVoucherCode()
-  if ( voucher ) {
-    if( voucher.symbol === '$') {
-      if(voucher.amount > 0) {
+  if (voucher) {
+    if (voucher.symbol === '$') {
+      if (voucher.amount > 0) {
         return { value: voucher.amount, byCupon: true, code: voucher.code }
       }
     }
-    if( voucher.symbol === '%') {
+    if (voucher.symbol === '%') {
       const percentage = voucher.amount / 100
       const discount = amount * percentage
       return { value: discount, byCupon: true, code: voucher.code }
-    }    
+    }
   }
 
   return { value: DISCOUNT_FIRST_BUY, byCupon: false }
@@ -238,7 +323,7 @@ function calculateDiscount(amount){
  * @param {*} quantity 
  * @param {*} discount 
  */
-function calculateTotalOfService(quantity, discount){
+function calculateTotalOfService(quantity, discount) {
   return (new Number(quantity) + new Number(FEE)) - new Number(discount.value)
 }
 
@@ -258,8 +343,8 @@ function showOrderSummary() {
 
   document.getElementById("scheduleValue").textContent = schedule.day + ', ' + schedule.text
   document.getElementById("quantityValue").textContent = "$" + quantity
-  
-  if(discount.byCupon) {
+
+  if (discount.byCupon) {
     document.getElementById("discountValue").textContent = "$" + discount.value + ", por usar tu cupón: " + discount.code
   } else {
     document.getElementById("discountValue").textContent = "$" + discount.value + ", por primera compra"
@@ -269,14 +354,14 @@ function showOrderSummary() {
   document.getElementById("totalValue").textContent = "$" + total
   document.getElementById("nameValue").textContent = contactData.name
   document.getElementById("phoneValue").textContent = contactData.phone
-  
+
   var addressText = ""
   if (address.zipCode) {
     addressText = address.address + ", CP. " + address.zipCode
   } else {
     addressText = address.address
   }
-  if(address.reference) {
+  if (address.reference) {
     addressText = addressText + ". " + address.reference
   }
   document.getElementById("addressValue").textContent = addressText
@@ -294,7 +379,7 @@ function isValidStep(step) {
     case 1:
       isValidate = isValidServiceType()
       break;
-    case 2: 
+    case 2:
       isValidate = isValidQuantity()
       break;
     case 3:
@@ -308,37 +393,37 @@ function isValidStep(step) {
       break;
     case 6:
       isValidate = isValidPaymentMethod()
-      break;  
+      break;
     default:
       break;
   }
   return isValidate
 }
 
-function isValidServiceType(){
+function isValidServiceType() {
   const serviceType = getServiceType()
-  if( serviceType && serviceType === 'stationary'){
-      mixpanel.track("Selecciono Tipo de Gas Estacionario", {"Tipo de Gas": "Estacionario"});
-      return true
+  if (serviceType && serviceType === 'stationary') {
+    mixpanel.track("Selecciono Tipo de Gas Estacionario", { "Tipo de Gas": "Estacionario" });
+    return true
   }
-  mixpanel.track("Selecciono Cilindro", {"Tipo de Gas": "Cilindro"});
+  mixpanel.track("Selecciono Cilindro", { "Tipo de Gas": "Cilindro" });
   return false
 }
 
 
-function isValidPaymentMethod(){
+function isValidPaymentMethod() {
   const paymentType = getPaymentType()
-  if(paymentType){
-    mixpanel.track("Selecciono Forma de Pago", {"Forma de Pago": paymentType});
+  if (paymentType) {
+    mixpanel.track("Selecciono Forma de Pago", { "Forma de Pago": paymentType });
     return true
   }
   return false
 }
 
-function isValidSchedule(){
+function isValidSchedule() {
   const schedule = getSchedule()
-  if(schedule) {
-    mixpanel.track("Selecciono Horario", {"Horario": schedule});
+  if (schedule) {
+    mixpanel.track("Selecciono Horario", { "Horario": schedule });
     return true
   }
   return false
@@ -347,7 +432,7 @@ function isValidSchedule(){
 function isValidQuantity() {
   const quantity = getQuantity()
   if (quantity > 0) {
-    mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": quantity});
+    mixpanel.track("Selecciono Cantidad de Gas", { "Cantidad": quantity });
     return true
   }
   return
@@ -356,7 +441,7 @@ function isValidQuantity() {
 function isValidContact() {
   const contactData = getContactInfo()
   if (contactData.name && (contactData.phone && contactData.phone.length >= 10)) {
-    mixpanel.track("Lleno Datos de Contacto", {"Nombre": contactData.name,"Telefono": contactData.phone});
+    mixpanel.track("Lleno Datos de Contacto", { "Nombre": contactData.name, "Telefono": contactData.phone });
     return true
   }
   document.getElementById("name").required = true
@@ -367,7 +452,7 @@ function isValidContact() {
 function isValidAddress() {
   const address = getAddress()
   if (address.address) {
-    mixpanel.track("Selecciono Direccion", {"Dirección": address.address});
+    mixpanel.track("Selecciono Direccion", { "Dirección": address.address });
     return true
   }
   document.getElementById("address").required = true
@@ -380,8 +465,8 @@ function isValidAddress() {
  * @param {*} inputFilter 
  */
 function setInputFilter(textbox, inputFilter) {
-  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-    textbox.addEventListener(event, function() {
+  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+    textbox.addEventListener(event, function () {
       if (inputFilter(this.value)) {
         this.oldValue = this.value;
         this.oldSelectionStart = this.selectionStart;
@@ -395,7 +480,7 @@ function setInputFilter(textbox, inputFilter) {
     });
   });
 }
-setInputFilter(document.getElementById("phone"), function(value) {
+setInputFilter(document.getElementById("phone"), function (value) {
   return /^\d*$/.test(value); // Allow digits and '.' only, using a RegExp
 });
 
@@ -405,15 +490,15 @@ setInputFilter(document.getElementById("phone"), function(value) {
  */
 
 
-function getUrlService(){
-  const dev = { 
+function getUrlService() {
+  const dev = {
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
   const qa = {
-    urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/logs', 
+    urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1services',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
@@ -424,21 +509,21 @@ function getUrlService(){
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
-  if(ENV === 'dev') {
+  if (ENV === 'dev') {
     return dev
   } else if (ENV === 'qa') {
     return qa
   }
   return prod
-} 
+}
 
 function registerEvent(key, data) {
   console.log(data)
   const service = getUrlService()
   const body = JSON.stringify({
-      key,
-      data
-    })
+    key,
+    data
+  })
   fetch(service.urlEvents, {
     mode: 'cors',
     method: 'POST',
@@ -499,7 +584,7 @@ function createServiceOrder() {
     amount: new Number(quantity * 100),
     fee: new Number(FEE * 100),
     discount: new Number(discount.value * 100),
-    serviceDate: schedule.value+'.005Z',
+    serviceDate: schedule.value + '.005Z',
     paymentTypeId: paymentType.type,
     customerData: {
       phoneNumber: contactData.phone,
@@ -507,7 +592,7 @@ function createServiceOrder() {
       name: contactData.name,
       address: {
         state: address.state || 'Unknown',
-        street: address.street || address.address.substring(0,50),
+        street: address.street || address.address.substring(0, 50),
         municipality: address.locality || 'Unknown',
         suburb: address.sublocality || 'Unknown',
         numExt: address.streetNumber || 'SN',
@@ -518,20 +603,20 @@ function createServiceOrder() {
       }
     }
   }
-  
+
   if (address.reference) {
     data.customerData.address.reference = address.reference
   }
-  
+
   makeRequest(data)
-  mixpanel.track("Realizo Pedido", {"Información de Pedido": data});
-  dataLayer.push({'event': 'realizopedido'})
+  mixpanel.track("Realizo Pedido", { "Información de Pedido": data });
+  dataLayer.push({ 'event': 'realizopedido' })
 
   // Reg on fb.
   fbq('track', 'CompleteRegistration', data);
 
   // Reg event
   data.discount = discount
-  registerEvent('NEW_SERVICE', data) 
+  registerEvent('NEW_SERVICE', data)
 
 }

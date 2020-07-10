@@ -3,6 +3,7 @@ vouchers = {
   'YOU500': { amount: 250, symbol: '$' },
   'TREN300': { amount: 300, symbol: '$' },
   'WOW600': { amount: 200, symbol: '$' },
+  'WOW200': { amount: 200, symbol: '$' },
   'OK600': { amount: 200, symbol: '$' },
   'JC300': { amount: 300, symbol: '$' },
   'DID300': { amount: 300, symbol: '$' },

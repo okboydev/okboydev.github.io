@@ -520,7 +520,8 @@ function createServiceOrder() {
         longitude: address.longitude || '00000000000',
         latitude: address.latitude || '00000000000'
       }
-    }
+    },
+    params: window.location.search || ''
   }
   
   if (address.reference) {

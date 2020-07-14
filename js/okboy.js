@@ -20,12 +20,9 @@ const schedule = [
 function populateTodaySchedule() {
   // Populate calendar when user select: today
   const currentDate = new Date()
-  console.log(currentDate);
   const hour = currentDate.getHours() + 2
   const datePart = currentDate.toLocaleDateString()
-  console.log('this is datepart= ' + datePart)
   const date = datePart.split('/')
-  console.log('this is date= '+ date)
   var hours = schedule.filter(function(item) {
     return item.numeric >= hour;
   });
@@ -67,6 +64,7 @@ today.onclick = function() {
 
 const cylinder = document.getElementById("cylinder");
 cylinder.onclick = function() {
+  mixpanel.track("Selecciono Cilindro", {"Tipo de Gas": "Cilindro"})
   document.getElementById("serviceTypeLabel").hidden = false
   document.getElementById("nextbutton").textContent = 'Cerrar'
   document.getElementById("nextbutton").onclick = function(){ MicroModal.close('createorder') }
@@ -79,10 +77,10 @@ stationary.onclick = function() {
   document.getElementById("nextbutton").textContent = 'Continuar'
   document.getElementById("nextbutton").onclick = function(){ toNEXT() }
 }
+
 const backButton = document.getElementById("backbutton")
 backButton.onclick = function() {
   if(step === 1) {
-    console.log('Entro')
     document.getElementById("nextbutton").textContent = 'Continuar'
     document.getElementById("nextbutton").onclick = function(){ toNEXT() }
     toPREV()
@@ -201,15 +199,20 @@ function getAddress() {
 function getPaymentType() {
   const rows = document.getElementById("paymentType").querySelectorAll("input")
   var paymentType = ""
+  var selected = false
   Array.from(rows).forEach(element => {
     if (element.checked) {
+      selected = true
       paymentType = element.value
     }
   })
-  if (paymentType === 'card') {
-    return { type: 2, value: "Con Tarjeta" }
+  if(selected){
+    if (paymentType === 'card') {
+      return { type: 2, value: "Con Terminal" }
+    }
+    return {type: 1, value: "En Efectivo"}
   }
-  return {type: 1, value: "En Efectivo"}
+  return null
 }
 
 /**
@@ -250,7 +253,6 @@ function showOrderSummary() {
   const quantity = getQuantity()
   const contactData = getContactInfo()
   const address = getAddress()
-  console.log(address)
   const paymentType = getPaymentType()
   const discount = calculateDiscount(quantity)
   const total = calculateTotalOfService(quantity, discount)
@@ -281,6 +283,8 @@ function showOrderSummary() {
   }
   document.getElementById("addressValue").textContent = addressText
   document.getElementById("paymentTypeValue").textContent = paymentType.value
+
+  mixpanel.track("Llego al Resumen de Pedido")
 }
 
 /**
@@ -302,12 +306,13 @@ function isValidStep(step) {
       break;
     case 4:
       isValidate = isValidAddress()
-      break;
-    case 5:
       isValidate = isValidSchedule()
       break;
-    case 6:
+    case 5:
       isValidate = isValidPaymentMethod()
+      break;
+    case 6:
+      
       break;  
     default:
       break;
@@ -318,10 +323,9 @@ function isValidStep(step) {
 function isValidServiceType(){
   const serviceType = getServiceType()
   if( serviceType && serviceType === 'stationary'){
-      mixpanel.track("Selecciono Tipo de Gas Estacionario", {"Tipo de Gas": "Estacionario"});
+      mixpanel.track("Selecciono Tipo de Gas Estacionario", {"Tipo de Gas": "Estacionario"})
       return true
   }
-  mixpanel.track("Selecciono Cilindro", {"Tipo de Gas": "Cilindro"});
   return false
 }
 
@@ -329,7 +333,7 @@ function isValidServiceType(){
 function isValidPaymentMethod(){
   const paymentType = getPaymentType()
   if(paymentType){
-    mixpanel.track("Selecciono Forma de Pago", {"Forma de Pago": paymentType});
+    mixpanel.track("Selecciono Forma de Pago", {"Forma de Pago": paymentType})
     return true
   }
   return false
@@ -337,8 +341,8 @@ function isValidPaymentMethod(){
 
 function isValidSchedule(){
   const schedule = getSchedule()
-  if(schedule) {
-    mixpanel.track("Selecciono Horario", {"Horario": schedule});
+  if(schedule && schedule.day !== "") {
+    mixpanel.track("Selecciono horario valido", {"Horario": schedule})
     return true
   }
   return false
@@ -347,7 +351,7 @@ function isValidSchedule(){
 function isValidQuantity() {
   const quantity = getQuantity()
   if (quantity > 0) {
-    mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": quantity});
+    mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": quantity})
     return true
   }
   return
@@ -356,7 +360,7 @@ function isValidQuantity() {
 function isValidContact() {
   const contactData = getContactInfo()
   if (contactData.name && (contactData.phone && contactData.phone.length >= 10)) {
-    mixpanel.track("Lleno Datos de Contacto", {"Nombre": contactData.name,"Telefono": contactData.phone});
+    mixpanel.track("Lleno Datos de Contacto", {"Nombre": contactData.name,"Telefono": contactData.phone})
     return true
   }
   document.getElementById("name").required = true
@@ -366,8 +370,8 @@ function isValidContact() {
 
 function isValidAddress() {
   const address = getAddress()
-  if (address.address) {
-    mixpanel.track("Selecciono Direccion", {"Dirección": address.address});
+  if (address.address !== '') {
+    mixpanel.track("Selecciono Direccion", {"Dirección": address.address})
     return true
   }
   document.getElementById("address").required = true
@@ -524,14 +528,12 @@ function createServiceOrder() {
   }
   
   makeRequest(data)
-  mixpanel.track("Realizo Pedido", {"Información de Pedido": data});
-  dataLayer.push({'event': 'realizopedido'})
 
+  mixpanel.track("Realizo Pedido", {"Información de Pedido": data})
+  dataLayer.push({'event': 'realizopedido'})
   // Reg on fb.
   fbq('track', 'CompleteRegistration', data);
-
   // Reg event
   data.discount = discount
-  registerEvent('NEW_SERVICE', data) 
-
+  registerEvent('NEW_SERVICE', data)
 }

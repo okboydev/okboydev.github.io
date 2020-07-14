@@ -127,7 +127,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                     <h1 style="text-transform:uppercase">Te conectamos con los mejores repartidores de gas en CDMX y Área Metropolitana</h1>
                     <p>Olvídate de los malos tratos y retrasos, okboy trabaja solo con los mejores repartidores de las mejores marcas. 
                         Agenda hoy tu servicio y aprovecha las promociones que tenemos para ti.</p>
-                    <button onclick="MicroModal.show('createorder')">Haz tu pedido aquí</button>
+                    <button onclick="createOrder()">Haz tu pedido aquí</button>
                 </div>
             </div>
             <div class="right">
@@ -140,8 +140,9 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
     <div id="apps">
         <h2>El control de tu servicio de gas en una app</h2>
         <div class="dstore">
-            <a href="https://apps.apple.com/us/app/okboy/id1502734350?l=es&ls=1" target="_blank"><img onclick="mixpanel.track('descarga ios')" src="assets/astore.png"/></a>
-            <a href="https://play.google.com/store/apps/details?id=app.okboy.cliente" target="_blank"><img onclick="mixpanel.track('descarga android')" src="assets/gplay.png"></a>
+            <!-- MIXPANEL: Registrar las posibles descargas de en tienda.  -->
+            <a href="https://apps.apple.com/us/app/okboy/id1502734350?l=es&ls=1" target="_blank"><img onclick="mixpanel.track('Click boton descarga ios')" src="assets/astore.png"/></a>
+            <a href="https://play.google.com/store/apps/details?id=app.okboy.cliente" target="_blank"><img onclick="mixpanel.track('Click boton descarga android')" src="assets/gplay.png"></a>
         </div>
         <div class="thep">
             <p>O si lo prefieres&nbsp;<span class="service">solicita tu servicio</span>&nbsp;en este momento</p>
@@ -173,29 +174,6 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             </div>
         </div>
     </div>
-
-    <!--
-    <footer>
-         
-        <div class="container">
-            <div class="row">
-                <div class="one-third column">
-                    <span><a href="./terms.html">Términos y condiciones</a></span><br>
-                    <img src="./assets/face_icon.png"/><a href="https://www.facebook.com/okboy.mx/"><span>Okboy en facebook</span></a>                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <div class="f1 one-third column ">
-                <img src="./assets/face_icon.png"/><a href="https://www.facebook.com/okboy.mx/"><span>Okboy en facebook</span></a>                    
-            </div>
-            <div class="f2">middle right</div>
-            <div class="f3">last right</div>          
-        </div>
-    </footer>
-    -->
-    
     <div class="modal micromodal-slide" id="createorder" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -222,9 +200,6 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                         <div id="lssix" class="step">
                             <span class="icon"><img src="assets/arrow.png"></span><span class="title">Confirmación de Pedido</span>
                         </div>
-                       
-                       
-                        
                     </div>
                     <div class="right">
                         <div class="fix"></div>
@@ -335,7 +310,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="mssix" class="section">
                                     <div class="fix"></div><div class="inside" style="text-align: left;">
-                                        <span class="tit">Tu pedido:</span><br>
+                                        <span class="tit">Ya casi, verifica tu pedido:</span><br> <br>
                                         <span style="font-weight: 600;">Cuando:</span>&nbsp;<span id="scheduleValue"></span><br>
                                         <span style="font-weight: 600;">Cantidad:</span>&nbsp;<span id="quantityValue"></span><br>
                                         <span style="font-weight: 600;">Descuento:</span>&nbsp;<span id="discountValue"></span><br>
@@ -345,10 +320,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <span style="font-weight: 600;">Nombre:</span>&nbsp;<span id="nameValue"></span><br>
                                         <span style="font-weight: 600;">Teléfono:</span>&nbsp;<span id="phoneValue"></span><br>
                                         <span style="font-weight: 600;">Dirección:</span>&nbsp;<span id="addressValue"></span><br>
-                                        <span style="font-weight: 600;">Forma de Pago:</span>&nbsp;<span id="paymentTypeValue"></span><br>
-                                        <!--
-                                        <span class="tit">¿Tienes un cupon de descuento?, ingresalo:</span><br>
-                                        <input class="name" type="text" placeholder="100CDMX" aria-hidden="true" id="cuponCode"/>-->
+                                        <span style="font-weight: 600;">Forma de Pago:</span>&nbsp;<span id="paymentTypeValue"></span><br><br>
+                                        <span style="font-weight: 600;">Haz click en CONTINUAR para confirmarlo.</span><br>
                                     </div>
                                 </div>
                                 <div id="msseven" class="section">
@@ -465,12 +438,6 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             console.log('toEight')
             document.getElementById("ms").style.marginTop = "-3360px";
         }
-        /*
-        toNine = function(){
-            console.log('toNine')
-            document.getElementById("ms").style.marginTop = "-3780px";
-        }
-        */
         toPREV = function(){
             if (step == 0){
                 document.getElementById("ms").style.marginTop = "0px";
@@ -522,7 +489,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                 // Mostrar oferta.
                 step = step + 1;
                 toOne();
-                mixpanel.track("Inicio Formulario de Pedido");
+                // MIXPANEL: Registrar cuando el usuario hace clic en siguiente, despues de mirar el copy del inicio del formulario.
+                mixpanel.track("Miro copy de inicio de pedido")
             }
             else if (step == 1){
                 // Seleccionar tipo de recarga
@@ -557,10 +525,12 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                 
             }
             else if (step == 5){
-                showOrderSummary()
-                step = step + 1;
-                removeonLSELEMENTS();
-                toSix();
+                if(isValidStep(5)) {
+                    showOrderSummary()
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toSix();
+                }                
             }
             else if (step == 6){
                 createServiceOrder();
@@ -571,21 +541,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                 document.getElementById("nextbutton").classList.add('off');
                 toSeven();
                 setTimeout(toEight, 4500);
-                mixpanel.track("Llego al Resumen de Pedido");
             }
-            /*
-            else if (step == 7){
-                //console.log('se crea el order')
-                createServiceOrder();
-                removeonLSELEMENTS();
-                document.getElementById("backbutton").classList.remove('on');
-                document.getElementById("backbutton").classList.add('off');
-                document.getElementById("nextbutton").classList.remove('on');
-                document.getElementById("nextbutton").classList.add('off');
-                toEight();
-                setTimeout(toNine, 4500);
-            }
-            */
         }
     </script>
 
@@ -593,15 +549,16 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
 
 <script>
     inicioFormulario = function(){
+        // MIXPANEL: Registrar cuando el usuario inicia el formulario de pedido.
+        mixpanel.track("Se inicio el formulario de pedido");
         dataLayer.push({'event': 'inicioformulariodepedido'});        
-        mixpanel.track("Abrio Modal de Pedido");
     }
     createOrder = function(){
         MicroModal.show('createorder',{
             openTrigger: inicioFormulario(), // [3]
             disableScroll: true, // [6]
             disableFocus: false, // [7]
-        });
+        });        
     }
 </script>
 

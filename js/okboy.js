@@ -413,18 +413,21 @@ function getUrlService(){
   const dev = { 
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services',
+    urlSms:'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/sms',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
   const qa = {
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/logs', 
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1services',
+    urlSms:'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/sms',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
 
   const prod = {
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services',
+    urlSms:'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/sms',
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
@@ -485,7 +488,7 @@ function makeRequest(data) {
       console.log('AN ERROR: ', data)
       console.error("ERROR:", err);
     });
-
+    sendConfirmationSMS(data.customerData.phoneNumber)
 }
 
 /**
@@ -537,4 +540,26 @@ function createServiceOrder() {
   // Reg event
   data.discount = discount
   registerEvent('NEW_SERVICE', data)
+}
+
+
+function sendConfirmationSMS(phoneNumber){
+  const service = getUrlService()
+  var sms = 'Servicio agendado con éxito, recibirás un WhatsApp de confirmación antes de la hora de tu servicio. Gracias por usar OKBOY.'
+  const body = {
+    recipient: `+52${phoneNumber}`,
+    text: sms,
+  }
+  
+  fetch(service.urlSms, {
+    mode: 'cors',
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': service.apikey
+    }
+  }).then(function (response) {
+    console.log(response)
+  })
 }

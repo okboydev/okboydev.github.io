@@ -61,7 +61,7 @@ today.onclick = function() {
   populateTodaySchedule()
 }
 
-
+// When select cylinder.
 const cylinder = document.getElementById("cylinder");
 cylinder.onclick = function() {
   mixpanel.track("Selecciono Cilindro", {"Tipo de Gas": "Cilindro"})
@@ -70,12 +70,14 @@ cylinder.onclick = function() {
   document.getElementById("nextbutton").onclick = function(){ MicroModal.close('createorder') }
 }
 
+// When select stationary
 const stationary = document.getElementById("stationary");
 stationary.onclick = function() {
   document.getElementById("serviceTypeLabel").hidden = true
   document.getElementById("nextbutton").hidden = false
   document.getElementById("nextbutton").textContent = 'Continuar'
   document.getElementById("nextbutton").onclick = function(){ toNEXT() }
+  toNEXT()
 }
 
 const backButton = document.getElementById("backbutton")
@@ -88,7 +90,18 @@ backButton.onclick = function() {
     toPREV()
   }
 }
-//<button id="backbutton" class="bnb off" onclick="toPREV()">Regresar</button>
+
+// When select chash
+const cash = document.getElementById("cash");
+cash.onclick = function() {
+  toNEXT()
+}
+
+// When select chash
+const terminal = document.getElementById("card");
+terminal.onclick = function() {
+  toNEXT()
+}
 
 
 function getServiceType() {

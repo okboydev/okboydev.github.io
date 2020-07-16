@@ -103,6 +103,14 @@ terminal.onclick = function() {
   toNEXT()
 }
 
+// Avanzar cuando completa el teléfono.
+const phone = document.getElementById("phone");
+phone.onkeyup = function() {
+  if(isValidContact()){
+    toNEXT()
+  }
+}
+
 
 function getServiceType() {
   const rows = document.getElementById("serviceType").querySelectorAll("input")

@@ -235,7 +235,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="msone" class="section">
                                     <div class="fix"></div><div class="inside" id="serviceType">
-                                        <span class="tit">¿Qué tipo de tanque tienes?</span><br>
+                                        <span class="tit">¿Qué servicio de gas necesitas?</span><br>
 
                                         <input class="card" type="radio" id="stationary" name="service" value="stationary" aria-hidden="true">
                                         <label class="card service" for="stationary">
@@ -280,10 +280,11 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                     <div class="fix"></div><div class="inside" id="contact">
                                         <span class="tit contactou qsection">Datos de contacto:</span><br>
                                         <div style="text-align: left;">
-                                            <span class="name">Tu Nombre:</span><br>
+                                            <span class="name">Tu nombre:</span><br>
                                             <input class="name" type="text" placeholder="Ej: Juan" aria-hidden="true" id="name"/>
-                                            <span class="phone">Tu Teléfono a 10 digitos:</span><br>
+                                            <span class="phone">Tú número celular a 10 dígitos.:</span><br>
                                             <input class="phone" type="tel" placeholder="Ej: 5517354618" aria-hidden="true" id="phone" maxlength="10" minlength="10"/>
+                                            <p style="opacity: 1.08;font-size: .85em;">Te enviaremos notificaciones por Whatsapp para darle seguimiento a tu servicio.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +326,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <label class="card" for="cash">Efectivo</label>
                                         <input class="card" type="radio" id="card" name="method" value="card" aria-hidden="true">
                                         <label class="card" for="card">Terminal</label><br><br>
-                                        <p style="opacity: .5;font-size: .85em;">Nuestras unidades cuenta con terminal para procesar los pagos con tarjeta</p>
+                                        <p style="opacity: .8;font-size: .85em;">Nuestras unidades cuenta con terminal para procesar los pagos con tarjeta</p>
                                     </div>
                                 </div>
                                 <div id="mssix" class="section">
@@ -509,8 +510,9 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                 // Mostrar oferta.
                 step = step + 1;
                 toOne();
+                // Se elimina registro de evento pues ya no es necesario registrarlo
                 // MIXPANEL: Registrar cuando el usuario hace clic en siguiente, despues de mirar el copy del inicio del formulario.
-                mixpanel.track("Miro copy de inicio de pedido")
+                //mixpanel.track("Miro copy de inicio de pedido")
             }
             else if (step == 1){
                 // Seleccionar tipo de recarga
@@ -571,7 +573,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
     inicioFormulario = function(){
         // MIXPANEL: Registrar cuando el usuario inicia el formulario de pedido.
         mixpanel.track("Se inicio el formulario de pedido");
-        dataLayer.push({'event': 'inicioformulariodepedido'});     
+        dataLayer.push({'event': 'inicioformulariodepedido'});
+        // Ocultar el copy de inicio
         toNEXT()   
     }
     createOrder = function(){

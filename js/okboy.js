@@ -129,6 +129,10 @@ phone.onkeyup = function() {
   }
 }
 
+function hideBackButton(hide) {
+  const backButton = document.getElementById("backbutton")
+  backButton.hidden = hide
+}
 
 function getServiceType() {
   const rows = document.getElementById("serviceType").querySelectorAll("input")

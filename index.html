@@ -147,7 +147,12 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                     <h1 style="text-transform:uppercase">Te conectamos con los mejores repartidores de gas en CDMX y Área Metropolitana</h1>
                     <p>Olvídate de los malos tratos y retrasos, okboy trabaja solo con los mejores repartidores de las mejores marcas. 
                         Agenda hoy tu servicio y aprovecha las promociones que tenemos para ti.</p>
-                    <button onclick="createOrder()">Haz tu pedido aquí</button>
+
+
+                        
+                    <button onclick="createService()">Pide tu Gas Estacionaío Aquí</button><br>
+                    <button>Pide un cilindro Aquí</button>
+                    <!-- <button onclick="createOrder()">Haz tu pedido aquí</button> -->
                 </div>
             </div>
             <div class="right">
@@ -237,7 +242,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                     <div class="fix"></div><div class="inside" id="serviceType">
                                         <span class="tit">¿Qué servicio de gas necesitas?</span><br>
 
-                                        <input class="card" type="radio" id="stationary" name="service" value="stationary" aria-hidden="true">
+                                        <input class="card" type="radio" id="stationary" name="service" value="stationary" aria-hidden="true" checked>
                                         <label class="card service" for="stationary">
                                             <img src="assets/estacionario-circle.png">
                                             Estacionario
@@ -430,11 +435,13 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             console.log('toTwo')
             document.getElementById("lstwo").classList.add('on');
             document.getElementById("ms").style.marginTop = "-840px";
+            hideBackButton(true)
         }
         toThree = function(){
             console.log('toThree')
             document.getElementById("lsthree").classList.add('on');
             document.getElementById("ms").style.marginTop = "-1260px";
+            hideBackButton(false)
         }
         toFour = function(){
             console.log('toFour')
@@ -570,6 +577,14 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
 
 
 <script>
+    createService = function(){
+        MicroModal.show('createorder',{
+            openTrigger: inicioFormulario(), // [3]
+            disableScroll: true, // [6]
+            disableFocus: false, // [7]
+        }); 
+        toNEXT()
+    }
     inicioFormulario = function(){
         // MIXPANEL: Registrar cuando el usuario inicia el formulario de pedido.
         mixpanel.track("Se inicio el formulario de pedido");

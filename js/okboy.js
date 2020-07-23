@@ -1,4 +1,4 @@
-const ENV = 'prod'
+const ENV = 'dev'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 
@@ -90,6 +90,24 @@ backButton.onclick = function() {
     toPREV()
   }
 }
+const amount = document.getElementById("amount")
+const amounts = document.getElementById("quantity").querySelectorAll("input")
+Array.from(amounts).forEach(card => {
+  card.onclick = function () {
+   console.log('click')
+   amount.value = card.value
+  }
+})
+
+amount.onkeyup = function() {
+  const rows = document.getElementById("quantity").querySelectorAll("input")
+  Array.from(rows).forEach(element => {
+    if (element.checked) {
+      element.checked = false
+    }
+  })
+}
+
 
 // When select chash
 const cash = document.getElementById("cash");
@@ -128,14 +146,8 @@ function getServiceType() {
  * Get amount from screen.
  */
 function getQuantity() {
-  const rows = document.getElementById("quantity").querySelectorAll("input")
-  var quantity = 0
-  Array.from(rows).forEach(element => {
-    if (element.checked) {
-      quantity = element.value
-    }
-  })
-  return quantity
+  const amount = document.getElementById("amount")
+  return new Number(amount.value)
 }
 
 
@@ -371,11 +383,11 @@ function isValidSchedule(){
 
 function isValidQuantity() {
   const quantity = getQuantity()
-  if (quantity > 0) {
+  if (quantity >= 400) {
     mixpanel.track("Selecciono Cantidad de Gas", {"Cantidad": quantity})
     return true
   }
-  return
+  return false
 }
 
 function isValidContact() {

@@ -259,16 +259,15 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 <div id="mstwo" class="section">
                                     <div class="fix"></div><div class="inside" id="quantity">
                                         <span class="tit">¿Cuánto necesitas?</span><br>
-                                        <input class="card" type="radio" id="qty400" name="qty" value="400" aria-hidden="true">
-                                        <label class="card" for="qty400">$400</label>
+                                        <span class="name">$</span>
+                                        <input type="number" placeholder="400" aria-hidden="true" id="amount" maxlength="4" minlength="3" min="400" max="5000" value="400"/><br>
+                                        <span style="opacity: .8;font-size: .85em;">Monto minímo: $400</span><br>
                                         <input class="card" type="radio" id="qty500" name="qty" value="500" aria-hidden="true">
                                         <label class="card" for="qty500">$500</label>
                                         <input class="card" type="radio" id="qty700" name="qty" value="700" aria-hidden="true">
                                         <label class="card" for="qty700">$700</label>
                                         <input class="card" type="radio" id="qty1000" name="qty" value="1000" aria-hidden="true">
                                         <label class="card" for="qty1000">$1000</label>
-                                        <input class="card" type="radio" id="qty1500" name="qty" value="1500" aria-hidden="true">
-                                        <label class="card" for="qty1500">$1500</label>
                                         <input class="card" type="radio" id="qty2000" name="qty" value="2000" aria-hidden="true">
                                         <label class="card" for="qty2000">$2000</label>
                                         <br/>

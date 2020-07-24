@@ -1,6 +1,7 @@
 const ENV = 'dev'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
+var cilynderFlow = false
 
 const schedule = [
   { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8},
@@ -62,12 +63,29 @@ today.onclick = function() {
 }
 
 // When select cylinder.
+showCylinderForm = function () {
+  mixpanel.track("Selecciono Tipo de Gas Cilindro", {"Tipo de Gas": "Cilindro"})
+  cilynderFlow = true
+  document.getElementById("stationaryLbl")
+  document.getElementById("cylinderLbl")
+
+  document.getElementById("serviceTypeLabel").hidden = false
+  hideBackButton(true)
+  // document.getElementById("nextbutton").textContent = 'Cerrar'
+  // document.getElementById("nextbutton").onclick = function(){ MicroModal.close('createorder') }
+}
+
 const cylinder = document.getElementById("cylinder");
 cylinder.onclick = function() {
-  mixpanel.track("Selecciono Cilindro", {"Tipo de Gas": "Cilindro"})
-  document.getElementById("serviceTypeLabel").hidden = false
-  document.getElementById("nextbutton").textContent = 'Cerrar'
-  document.getElementById("nextbutton").onclick = function(){ MicroModal.close('createorder') }
+  showCylinderForm()  
+}
+
+function getCilynderPhone(){
+  const phoneCilynder = document.getElementById("phoneCilynder")
+  if(phoneCilynder) {
+    return phoneCilynder.value
+  }
+  return null
 }
 
 // When select stationary
@@ -94,7 +112,6 @@ const amount = document.getElementById("amount")
 const amounts = document.getElementById("quantity").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
   card.onclick = function () {
-   console.log('click')
    amount.value = card.value
   }
 })
@@ -130,6 +147,7 @@ phone.onkeyup = function() {
 }
 
 function hideBackButton(hide) {
+  console.log("Se ejecuta con: ", hide)
   const backButton = document.getElementById("backbutton")
   backButton.hidden = hide
 }
@@ -439,7 +457,9 @@ function setInputFilter(textbox, inputFilter) {
 setInputFilter(document.getElementById("phone"), function(value) {
   return /^\d*$/.test(value); // Allow digits and '.' only, using a RegExp
 });
-
+setInputFilter(document.getElementById("phoneCilynder"), function(value) {
+  return /^\d*$/.test(value); // Allow digits and '.' only, using a RegExp
+});
 
 /**
  * SERVICE BACKEND
@@ -525,7 +545,9 @@ function makeRequest(data) {
       console.log('AN ERROR: ', data)
       console.error("ERROR:", err);
     });
-    sendConfirmationSMS(data.customerData.phoneNumber)
+    if(ENV === 'prod') {
+      sendConfirmationSMS(data.customerData.phoneNumber)
+    }
 }
 
 /**

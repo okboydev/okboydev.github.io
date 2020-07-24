@@ -137,7 +137,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             </a>
         </div>
         <div class="right">
-            <button onclick="createOrder()">Pide tu gas!</button>
+            <button onclick="createServiceFromAmount()">Pide tu gas!</button>
         </div>
     </header>
     <div id="hero">
@@ -150,8 +150,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
 
 
                         
-                    <button onclick="createService()">Pide tu Gas Estacionaío Aquí</button><br>
-                    <button>Pide un cilindro Aquí</button>
+                    <button onclick="createServiceFromAmount()">Pide tu Gas Estacionaío Aquí</button><br>
+                    <button onclick="registerCylinderService()">Pide un cilindro Aquí</button>
                     <!-- <button onclick="createOrder()">Haz tu pedido aquí</button> -->
                 </div>
             </div>
@@ -240,24 +240,34 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="msone" class="section">
                                     <div class="fix"></div><div class="inside" id="serviceType">
-                                        <span class="tit">¿Qué servicio de gas necesitas?</span><br>
+                                       <!-- <span class="tit">¿Qué servicio de gas necesitas?</span><br>-->
+                                        <span class="tit">Lo sentimos :'(</span><br>
 
                                         <input class="card" type="radio" id="stationary" name="service" value="stationary" aria-hidden="true" checked>
-                                        <label class="card service" for="stationary">
+                                        <!--
+                                        <label class="card service" for="stationary" id="stationaryLbl">
                                             <img src="assets/estacionario-circle.png">
                                             Estacionario
                                         </label>
+                                        -->
                                         <input class="card" type="radio" id="cylinder" name="service" value="cylinder" aria-hidden="true">
-                                        <label class="card service" for="cylinder">
+                                        <!--
+                                        <label class="card service" for="cylinder" id="cylinderLbl">
                                             <img src="assets/cilindro-circle.png">
                                             Cilindro
                                         </label>
+                                        
                                         <br> <br>
+                                        -->
                                         <div style="text-align: left;" hidden id="serviceTypeLabel">
-                                            <span class="tit contactou qsection">No eres tú, somos nosotros</span>
-                                            <span class="lit">Por el momento no contamos con cobertura para cilindro, esperemos en el futuro poder contar con el servicio. </span>
-                                            <span class="lit">¿Quieres recibir una notificación? Dejanos tu mail.</span>
-                                            <input class="name" type="email" placeholder="some@domain.com" aria-hidden="true" id="email"/>
+                                            <span class="tit contactou qsection">Estamos creciendo para ti.</span>
+                                            <span class="lit">Por el momento no contamos con servicio para cilindro, sin embargo, estamos trabajando para ofrecertelo muy pronto.</span>
+                                            <br><br>
+                                            <span class="lit">¿Quieres que te avisemos cuando podamos recargar tu cilindro?</span>
+                                            <br><br>
+                                            <span class="phone">Tú número celular a 10 dígitos.:</span><br>
+                                            <input class="phone" type="tel" placeholder="Ej: 5517354618" aria-hidden="true" id="phoneCilynder" maxlength="10" minlength="10"/>
+                                            <p style="opacity: 1.08;font-size: .85em;">Te enviaremos notificaciones por Whatsapp cuando podamos recargar cilindro.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -513,63 +523,72 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             }
         }
         toNEXT = function(){
-            if (step == 0){
-                // Mostrar oferta.
-                step = step + 1;
-                toOne();
-                // Se elimina registro de evento pues ya no es necesario registrarlo
-                // MIXPANEL: Registrar cuando el usuario hace clic en siguiente, despues de mirar el copy del inicio del formulario.
-                //mixpanel.track("Miro copy de inicio de pedido")
-            }
-            else if (step == 1){
-                // Seleccionar tipo de recarga
-                if( isValidStep(1) ) {
+            if(!cilynderFlow) {
+                if (step == 0){
+                    // Mostrar oferta.
                     step = step + 1;
-                    removeonLSELEMENTS();
-                    toTwo();
-                }                                
-            }
-            else if (step == 2){
-                // Seleccionar cantidad
-                if ( isValidStep(2) ) {
-                    step = step + 1;
-                    removeonLSELEMENTS();
-                    toThree();
-                }                
-            }
-            else if (step == 3){
-                console.log("PASO 3")
-                if( isValidStep(3) ) {
-                    step = step + 1;
-                    removeonLSELEMENTS();
-                    toFour();
-                }                
-            }
-            else if (step == 4){
-                if( isValidStep(4) ) {
-                    step = step + 1;
-                    removeonLSELEMENTS();
-                    toFive();
+                    toOne();
+                    // Se elimina registro de evento pues ya no es necesario registrarlo
+                    // MIXPANEL: Registrar cuando el usuario hace clic en siguiente, despues de mirar el copy del inicio del formulario.
+                    //mixpanel.track("Miro copy de inicio de pedido")
                 }
-                
-            }
-            else if (step == 5){
-                if(isValidStep(5)) {
-                    showOrderSummary()
-                    step = step + 1;
+                else if (step == 1){
+                    // Seleccionar tipo de recarga
+                    if( isValidStep(1) ) {
+                        step = step + 1;
+                        removeonLSELEMENTS();
+                        toTwo();
+                    }                                
+                }
+                else if (step == 2){
+                    // Seleccionar cantidad
+                    if ( isValidStep(2) ) {
+                        step = step + 1;
+                        removeonLSELEMENTS();
+                        toThree();
+                    }                
+                }
+                else if (step == 3){
+                    console.log("PASO 3")
+                    if( isValidStep(3) ) {
+                        step = step + 1;
+                        removeonLSELEMENTS();
+                        toFour();
+                    }                
+                }
+                else if (step == 4){
+                    if( isValidStep(4) ) {
+                        step = step + 1;
+                        removeonLSELEMENTS();
+                        toFive();
+                    }
+                    
+                }
+                else if (step == 5){
+                    if(isValidStep(5)) {
+                        showOrderSummary()
+                        step = step + 1;
+                        removeonLSELEMENTS();
+                        toSix();
+                    }                
+                }
+                else if (step == 6){
+                    createServiceOrder();
                     removeonLSELEMENTS();
-                    toSix();
+                    document.getElementById("backbutton").classList.remove('on');
+                    document.getElementById("backbutton").classList.add('off');
+                    document.getElementById("nextbutton").classList.remove('on');
+                    document.getElementById("nextbutton").classList.add('off');
+                    toSeven();
+                    setTimeout(toEight, 4500);
+                }
+                console.log("STEP: ", step)
+            } else {
+                const telefonoCilindro = getCilynderPhone()
+                if(telefonoCilindro) {
+                    mixpanel.track("Quiere notificaciones de cilindro.", {"Teléfono para cilindro": telefonoCilindro})
                 }                
-            }
-            else if (step == 6){
-                createServiceOrder();
-                removeonLSELEMENTS();
-                document.getElementById("backbutton").classList.remove('on');
-                document.getElementById("backbutton").classList.add('off');
-                document.getElementById("nextbutton").classList.remove('on');
-                document.getElementById("nextbutton").classList.add('off');
-                toSeven();
-                setTimeout(toEight, 4500);
+                MicroModal.close('createorder')
             }
         }
     </script>
@@ -577,27 +596,38 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
 
 
 <script>
-    createService = function(){
+    // Iniciar modal desde el monto.
+    createServiceFromAmount = function(){
+       cilynderFlow = false
+       hideBackButton
+       createOrder()
+       // Ocultar el copy de inicio
+       // toNEXT() 
+       step = 2
+       toTwo()
+       mixpanel.track("Selecciono Tipo de Gas Estacionario", {"Tipo de Gas": "Estacionario"})
+    }
+    // Iniciar modal desde cilindro.
+    registerCylinderService = function () {
+        createOrder()
+        step = 1
+        toOne()
+        showCylinderForm()
+    }
+
+    inicioFormulario = function(){         
+    }
+    createOrder = function(){        
         MicroModal.show('createorder',{
             openTrigger: inicioFormulario(), // [3]
             disableScroll: true, // [6]
             disableFocus: false, // [7]
-        }); 
-        toNEXT()
-    }
-    inicioFormulario = function(){
+        });
         // MIXPANEL: Registrar cuando el usuario inicia el formulario de pedido.
         mixpanel.track("Se inicio el formulario de pedido");
         dataLayer.push({'event': 'inicioformulariodepedido'});
-        // Ocultar el copy de inicio
-        toNEXT()   
-    }
-    createOrder = function(){
-        MicroModal.show('createorder',{
-            openTrigger: inicioFormulario(), // [3]
-            disableScroll: true, // [6]
-            disableFocus: false, // [7]
-        });        
+        
+        //         
     }
 </script>
 

@@ -1,4 +1,4 @@
-const ENV = 'dev'
+const ENV = 'prod'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 var cilynderFlow = false

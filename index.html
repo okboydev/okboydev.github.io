@@ -145,18 +145,14 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             <div class="left">
                 <div class="fix"></div><div class="cta">
                     <h1 style="text-transform:uppercase">Te conectamos con los mejores repartidores de gas en CDMX y Área Metropolitana</h1>
-                    <p>Olvídate de los malos tratos y retrasos, okboy trabaja solo con los mejores repartidores de las mejores marcas. 
-                        Agenda hoy tu servicio y aprovecha las promociones que tenemos para ti.</p>
                     
-                    <p>Descarga nuestra app disponible para Android y IOS.</p>
 
                     <div class="dstore">
                         <a href="https://play.google.com/store/apps/details?id=app.okboy.cliente" target="_blank"><img onclick="mixpanel.track('Click boton descarga android')" src="assets/gplay.png" width="160"></a>
                         <a href="https://apps.apple.com/us/app/okboy/id1502734350?l=es&ls=1" target="_blank"><img onclick="mixpanel.track('Click boton descarga ios')" src="assets/astore.png" width="160"/></a>
                     </div>
-                    <br>
-                    <p>O si lo prefieres, puedes realizar tu pedido de inmediato:</p>
-                    <button onclick="createOrder()">Haz tu pedido aquí</button>
+                    <br><br><br>
+                    <p style="width:100%">O si lo prefieres, <button onclick="createOrder()" style="font-size: 14px;">Haz tu pedido aquí</button></p>
                 </div>
             </div>
             <div class="right">
@@ -206,6 +202,24 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             </div>
         </div>
     </div>
+
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="six columns">
+                    <img class="logo" src="assets/logo.png">
+                </div>
+                <div class="six columns findus">
+                    okboy &copy; 2020
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
     <div class="modal micromodal-slide" id="createorder" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
@@ -274,14 +288,6 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <span class="name">$</span>
                                         <input type="number" placeholder="400" aria-hidden="true" id="amount" maxlength="4" minlength="3" min="400" max="5000" value="400"/><br>
                                         <span style="opacity: .8;font-size: .85em;">Monto minímo: $400</span><br>
-                                        <input class="card" type="radio" id="qty500" name="qty" value="500" aria-hidden="true">
-                                        <label class="card" for="qty500">$500</label>
-                                        <input class="card" type="radio" id="qty700" name="qty" value="700" aria-hidden="true">
-                                        <label class="card" for="qty700">$700</label>
-                                        <input class="card" type="radio" id="qty1000" name="qty" value="1000" aria-hidden="true">
-                                        <label class="card" for="qty1000">$1000</label>
-                                        <input class="card" type="radio" id="qty2000" name="qty" value="2000" aria-hidden="true">
-                                        <label class="card" for="qty2000">$2000</label>
                                         <br/>
                                         <span class="tit">¿Tienes un cupón de descuento?, ingresalo aquí:</span>
                                         <input class="name" type="text" placeholder="100CDMX" aria-hidden="true" id="cuponCode"/>
@@ -413,6 +419,20 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="modal micromodal-slide" id="createordercilindro" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <main class="modal__content" id="modal-1-content">
+                </main>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         var step = 0
@@ -654,6 +674,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
 
 <script src="./js/okboy.js"></script>
 <script src="./js/vouchers.js"></script>
+
+
 
 
 </body>

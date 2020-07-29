@@ -211,7 +211,11 @@ footer{
 }
 
 
-
+#createordercilindro{
+    z-index: 3;
+    position: fixed;
+    font-size: .95em;
+}
 
 
 
@@ -459,7 +463,13 @@ span.name, span.phone{
 }
 
 
-
+footer .logo{
+    height: 50px;
+}
+footer .findus{
+    line-height: 54px;
+    text-align: right;
+}
 
 
 /* Todo el diseño para Celulares.. */

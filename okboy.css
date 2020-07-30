@@ -93,13 +93,13 @@ header .right button{
     color: #303034;
 }
 #hero .cont .left h1{
-    font-size: 2.75em;
+    font-size: 2.15em;
     letter-spacing: .025em;
 }
 #hero .cont .left .cta p{
-    font-size: 1.25em;
+    font-size: 1.15em;
     letter-spacing: .1em;
-    width: 70%;
+    width: 85%;
 }
 #hero .cont .left .cta button{
     background-color: rgb(91,42,224);
@@ -528,7 +528,7 @@ span.name, span.phone{
         vertical-align: middle;
     }
     #hero .cont .left h1{
-        font-size: 1.5em;
+        font-size: 1.35em;
         letter-spacing: .015em;
     }
     #hero .cont .left .cta p{
@@ -917,13 +917,13 @@ span.name, span.phone{
         color: #303034;
     }
     #hero .cont .left h1{
-        font-size: 2.75em;
+        font-size: 1.75em;
         letter-spacing: .025em;
     }
     #hero .cont .left .cta p{
-        font-size: 1.25em;
+        font-size: 0.95em;
         letter-spacing: .1em;
-        width: 70%;
+        width: 100%;
     }
     #hero .cont .left .cta button{
         background-color: rgb(91,42,224);
@@ -942,6 +942,8 @@ span.name, span.phone{
         float: left;
     }
 }
+
+
 
 
 

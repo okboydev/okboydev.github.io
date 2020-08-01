@@ -91,12 +91,15 @@ backButton.onclick = function () {
     toPREV()
   }
 }
+
 const amount = document.getElementById("amount")
 const amounts = document.getElementById("quantity").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
+  console.log(card)
   card.onclick = function () {
-    console.log('click')
-    amount.value = card.value
+    if(card.value) {
+      amount.value = card.value
+    }    
   }
 })
 

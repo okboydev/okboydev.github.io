@@ -15,6 +15,13 @@ const schedule = [
   { value: '17:00:00', text: 'De: 04:00 pm a 05:00 pm', numeric: 16 }
 ]
 
+document.onkeydown = function (t) {
+  if(t.which == 9){
+   return false;
+  }
+ }
+
+ 
 /**
  * Pupulate schedule
  */

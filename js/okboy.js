@@ -1,4 +1,4 @@
-const ENV = 'prod'
+const ENV = 'dev'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 
@@ -102,7 +102,6 @@ backButton.onclick = function () {
 const amount = document.getElementById("amount")
 const amounts = document.getElementById("quantity").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
-  console.log(card)
   card.onclick = function () {
     if(card.value) {
       amount.value = card.value
@@ -126,7 +125,7 @@ cash.onclick = function () {
   toNEXT()
 }
 
-// When select chash
+// When select card
 const terminal = document.getElementById("card");
 terminal.onclick = function () {
   toNEXT()
@@ -350,13 +349,12 @@ function isValidStep(step) {
       break;
     case 4:
       isValidate = isValidAddress()
-      isValidate = isValidSchedule()
       break;
     case 5:
-      isValidate = isValidPaymentMethod()
+      isValidate = isValidSchedule()
       break;
     case 6:
-
+      isValidate = isValidPaymentMethod()
       break;
     default:
       break;
@@ -414,11 +412,18 @@ function isValidContact() {
 
 function isValidAddress() {
   const address = getAddress()
-  if (address.address !== '') {
+  const zipCodeIsValid = validateZipCode(address.zipCode)
+  if(zipCodeIsValid) {
+    document.getElementById("invalidZipCodeText").hidden = true
+  } else {
+    document.getElementById("invalidZipCodeText").hidden = false
+  }
+  if (address.address !== '' && zipCodeIsValid) {
     mixpanel.track("Selecciono Direccion", { "Dirección": address.address })
     return true
   }
   document.getElementById("address").required = true
+  document.getElementById("zipCode").required = true
   return false
 }
 

@@ -224,12 +224,15 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                             <span class="icon"><img src="assets/arrow.png"></span><span class="title">Datos de Contacto</span>
                         </div>
                         <div id="lsfour" class="step">
-                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Dónde y Cuándo</span>
-                        </div>                        
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">A dónde lo llevamos</span>
+                        </div>     
                         <div id="lsfive" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Cúando lo llevamos</span>
+                        </div>                    
+                        <div id="lssix" class="step">
                             <span class="icon"><img src="assets/arrow.png"></span><span class="title">Metodo de Pago</span>
                         </div>
-                        <div id="lssix" class="step">
+                        <div id="lsseven" class="step">
                             <span class="icon"><img src="assets/arrow.png"></span><span class="title">Confirmación de Pedido</span>
                         </div>
                     </div>
@@ -305,7 +308,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <div style="text-align: left;">
                                             <span class="phone">Dirección:</span>
                                             <input id="address" class="phone" type="text" placeholder="Ej: Campos Elisesos 322" aria-hidden="true"/>
-                                            <input type="hidden" id="zipCode" class="phone" type="text" aria-hidden="true"/>
+                                            <span class="phone">Código Postal:</span>
+                                            <input type="text" id="zipCode" class="phone" type="text" aria-hidden="true" maxlength="5" minlength="5"/>
                                             <input type="hidden" id="latitude" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="longitude" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="street" class="phone" type="text" aria-hidden="true"/>
@@ -318,7 +322,12 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                             <span class="phone">Comentarios o referencias:</span>
                                             <input id="reference" class="phone" type="text" placeholder="Ej: Fachada Azul" aria-hidden="true"/>
                                         </div>
-                                        <span class="tit contactou qsection">¿Cuándo lo necesitas?</span>                                        
+                                        <span class="lit" id="invalidZipCodeText" hidden>Por el momento no contamos con cobertura en tu localidad, estamos trabajando para expandir nuestra cobertura.</span>
+                                    </div>
+                                </div>
+                                <div id="msfive" class="section">
+                                    <div class="fix"></div><div class="inside" id="contact">
+                                        <span class="tit contactou qsection">¿Cuándo lo necesitas?</span>
                                         <input class="card" type="radio" id="hoy" name="day" value="{{hoy}}" aria-hidden="true">
                                         <label class="card" for="hoy">Hoy</label>
                                         <input class="card" type="radio" id="manana" name="day" value="{{manana}}" aria-hidden="true">
@@ -329,8 +338,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         </select>
                                         <input type="hidden" id="dayOfService" class="phone" type="text" aria-hidden="true"/>
                                     </div>
-                                </div>    
-                                <div id="msfive" class="section">
+                                </div>     
+                                <div id="mssix" class="section">
                                     <div class="fix"></div><div class="inside" id="paymentType">
                                         <span class="tit">Elige una forma de pago:</span><br>
                                         <input class="card" type="radio" id="cash" name="method" value="cash" aria-hidden="true">
@@ -340,7 +349,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <p style="opacity: .8;font-size: .85em;">Nuestras unidades cuenta con terminal para procesar los pagos con tarjeta</p>
                                     </div>
                                 </div>
-                                <div id="mssix" class="section">
+                                <div id="msseven" class="section">
                                     <div class="fix"></div><div class="inside" style="text-align: left;">
                                         <span class="tit">Ya casi, verifica tu pedido:</span><br> <br>
                                         <span style="font-weight: 600;">Cuando:</span>&nbsp;<span id="scheduleValue"></span><br>
@@ -356,7 +365,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <span style="font-weight: 600;">Haz click en CONTINUAR para confirmarlo.</span><br>
                                     </div>
                                 </div>
-                                <div id="msseven" class="section">
+                                <div id="mseight" class="section">
                                     <div class="fix"></div><div class="inside">
                                         <style>
                                             .inncircle{
@@ -393,7 +402,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <span class="tit">Estamos creando tu pedido</span><br>
                                     </div>
                                 </div>
-                                <div id="mseight" class="section">
+                                <div id="msnine" class="section">
                                     <div class="fix"></div><div class="inside">
                                         <img src="assets/ok.png" height="160"/><br>
                                         <span class="tit">¡Tu pedido ha sido registrado!</span><br>
@@ -424,7 +433,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             document.getElementById("lsfour").classList.remove('on');
             document.getElementById("lsfive").classList.remove('on');
             document.getElementById("lssix").classList.remove('on');
-
+            document.getElementById("lsseven").classList.remove('on');
         }
         toZero = function(){
             console.log('toZero')
@@ -470,6 +479,10 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
         toEight = function(){
             console.log('toEight')
             document.getElementById("ms").style.marginTop = "-3360px";
+        }
+        toNine = function(){
+            console.log('toEight')
+            document.getElementById("ms").style.marginTop = "-3780px";
         }
         toPREV = function(){
             if (step == 0){
@@ -560,22 +573,29 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             }
             else if (step == 5){
                 if(isValidStep(5)) {
-                    showOrderSummary()
                     step = step + 1;
                     removeonLSELEMENTS();
                     toSix();
                 }                
             }
             else if (step == 6){
+                if(isValidStep(6)) {
+                    showOrderSummary()
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toSeven();
+                }                
+            }
+            else if (step == 7){
                 createServiceOrder();
                 removeonLSELEMENTS();
                 document.getElementById("backbutton").classList.remove('on');
                 document.getElementById("backbutton").classList.add('off');
                 document.getElementById("nextbutton").classList.remove('on');
                 document.getElementById("nextbutton").classList.add('off');
-                toSeven();
-                setTimeout(toEight, 4500);
-                step = 8;
+                toEight();
+                setTimeout(toNine, 4500);
+                step = 9;
             }
         }
     </script>
@@ -654,6 +674,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
 
 <script src="./js/okboy.js"></script>
 <script src="./js/vouchers.js"></script>
+<script src="./js/zipcodes.js"></script>
 
 
 </body>

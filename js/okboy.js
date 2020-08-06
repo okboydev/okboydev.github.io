@@ -3,7 +3,7 @@ const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 
 
-const schedule = [
+const normalOptions = [
   { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
   { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9 },
   { value: '11:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 10 },
@@ -15,29 +15,70 @@ const schedule = [
   { value: '17:00:00', text: 'De: 04:00 pm a 05:00 pm', numeric: 16 }
 ]
 
+const optionsWeekend = [
+  { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
+  { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9 },
+  { value: '11:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 10 },
+  { value: '12:00:00', text: 'De: 11:00 am a 12:00 pm', numeric: 11 },
+  { value: '13:00:00', text: 'De: 12:00 pm a 01:00 pm', numeric: 12 },
+  { value: '14:00:00', text: 'De: 01:00 pm a 02:00 pm', numeric: 13 },
+]
+
 document.onkeydown = function (t) {
   if(t.which == 9){
    return false;
   }
  }
 
+ /**
+  * 
+  * @param {Date} date 
+  */
+ function getScheduleOptions(date) {
+  const dayOfWeek = date.getDay()
+  console.log('Day of week: ', dayOfWeek)
+  if(dayOfWeek === 6 || dayOfWeek === 0) {
+    console.log('Es fin de semana')
+    return { isWeekend: true, options: optionsWeekend }
+  }
+  return { isWeekend: false, options: normalOptions }
+ }
  
-/**
+
+function showScheduleLabels(isWeekend, hours) {
+  if (hours.length <= 0){
+    document.getElementById("scheduleOutOfRangelbl").hidden = false
+    document.getElementById("wekendLbl").hidden = true
+  } else {
+    document.getElementById("scheduleOutOfRangelbl").hidden = true
+    if(isWeekend) {
+      document.getElementById("wekendLbl").hidden = false
+    } else {
+      document.getElementById("wekendLbl").hidden = true
+    }
+  }
+}
+
+
+ /**
  * Pupulate schedule
  */
 function populateTodaySchedule() {
   // Populate calendar when user select: today
   const currentDate = new Date()
+  console.log(currentDate)
   const hour = currentDate.getHours() + 2
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
-  var hours = schedule.filter(function (item) {
+  const schedule = getScheduleOptions(currentDate)
+  var hours = schedule.options.filter(function (item) {
     return item.numeric >= hour;
   });
   var options = ['<option value=\'\' disabled>Sin horarios disponibles</option>']
   if (hours.length > 0) {
     options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   }
+  showScheduleLabels(schedule.isWeekend, hours)
   const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
 }
@@ -50,9 +91,12 @@ function populateTomorrowSchedule() {
   currentDate.setDate(currentDate.getDate() + 1);
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
-  var options = schedule.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
+  console.log(currentDate)
+  const schedule = getScheduleOptions(currentDate)
+  var options = schedule.options.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
+  showScheduleLabels(schedule.isWeekend, options)
 }
 
 const tomorrow = document.getElementById("manana");

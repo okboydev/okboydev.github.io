@@ -309,7 +309,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                             <span class="phone">Dirección:</span>
                                             <input id="address" class="phone" type="text" placeholder="Ej: Campos Elisesos 322" aria-hidden="true"/>
                                             <span class="phone">Código Postal:</span>
-                                            <input type="text" id="zipCode" class="phone" type="text" aria-hidden="true" maxlength="5" minlength="5"/>
+                                            <input type="text" id="zipCode" class="phone" type="text" aria-hidden="true" maxlength="5" minlength="5" style="width: 25%" placeholder="Ej: 06600"/>
                                             <input type="hidden" id="latitude" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="longitude" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="street" class="phone" type="text" aria-hidden="true"/>
@@ -327,7 +327,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="msfive" class="section">
                                     <div class="fix"></div><div class="inside" id="contact">
-                                        <span class="tit contactou qsection">¿Cuándo lo necesitas?</span>
+                                        <span class="tit contactou qsection">¿Cuándo lo necesitas?</span><br>
                                         <input class="card" type="radio" id="hoy" name="day" value="{{hoy}}" aria-hidden="true">
                                         <label class="card" for="hoy">Hoy</label>
                                         <input class="card" type="radio" id="manana" name="day" value="{{manana}}" aria-hidden="true">
@@ -336,7 +336,9 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <select id="timeframe" name="timeframe" aria-hidden="true">
                                             <option>Selecciona un día</option>
                                         </select>
-                                        <input type="hidden" id="dayOfService" class="phone" type="text" aria-hidden="true"/>
+                                        <input type="hidden" id="dayOfService" class="phone" type="text" aria-hidden="true"/><br/>
+                                        <span class="lit" id="scheduleOutOfRangelbl" hidden><b>:'( El día de hoy ya no tenemos horarios disponibles, pero puedes seleccionar un horario para mañana</b></span>
+                                        <span class="lit" id="wekendLbl" hidden><b>Este fin de semana estamos atendiendo muchos pedidos por lo que tu servicio estará sujeto a disponibilidad. Nos comunicaremos contigo pronto.</b></span>
                                     </div>
                                 </div>     
                                 <div id="mssix" class="section">

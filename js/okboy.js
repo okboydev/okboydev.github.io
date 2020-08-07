@@ -24,6 +24,12 @@ const optionsWeekend = [
   { value: '14:00:00', text: 'De: 01:00 pm a 02:00 pm', numeric: 13 },
 ]
 
+const optionsWeekendGDL = [
+  { value: '10:00:00', text: 'De: 08:00 am a 10:00 am', numeric: 8 },
+  { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 9 },
+  { value: '14:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 110 }
+]
+
 document.onkeydown = function (t) {
   if(t.which == 9){
    return false;
@@ -36,9 +42,12 @@ document.onkeydown = function (t) {
   */
  function getScheduleOptions(date) {
   const dayOfWeek = date.getDay()
-  console.log('Day of week: ', dayOfWeek)
   if(dayOfWeek === 6 || dayOfWeek === 0) {
     console.log('Es fin de semana')
+    if(city !== null && city !== undefined && city === 'GDL') {
+      console.log('Options for GDL')
+      return { isWeekend: true, options: optionsWeekendGDL }
+    }
     return { isWeekend: true, options: optionsWeekend }
   }
   return { isWeekend: false, options: normalOptions }
@@ -87,7 +96,7 @@ function populateTodaySchedule() {
  * Populate schedule for next day.
  */
 function populateTomorrowSchedule() {
-  var currentDate = new Date();
+  var currentDate = new Date()
   currentDate.setDate(currentDate.getDate() + 1);
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
@@ -456,12 +465,15 @@ function isValidContact() {
 
 function isValidAddress() {
   const address = getAddress()
-  const zipCodeIsValid = validateZipCode(address.zipCode)
-  if(zipCodeIsValid) {
-    document.getElementById("invalidZipCodeText").hidden = true
-  } else {
-    document.getElementById("invalidZipCodeText").hidden = false
-  }
+  var zipCodeIsValid = false
+  if (address.zipCode !== '') {
+    zipCodeIsValid = validateZipCode(address.zipCode)
+    if (!zipCodeIsValid) {
+      document.getElementById("invalidZipCodeText").hidden = false
+    } else {
+      document.getElementById("invalidZipCodeText").hidden = true
+    }
+  }  
   if (address.address !== '' && zipCodeIsValid) {
     mixpanel.track("Selecciono Direccion", { "Dirección": address.address })
     return true

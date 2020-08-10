@@ -16,6 +16,7 @@ allowZipCodesPrefix = [
 '14', // CdMx
 '15', // CdMx
 '16', // CdMx
+'52', // Naucalpan
 '54', // México, Tlalnepantla
 '55', // México, Ecatepec
 '56', // México, Chalco - Texcoco

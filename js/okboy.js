@@ -31,36 +31,34 @@ const optionsWeekendGDL = [
 ]
 
 document.onkeydown = function (t) {
-  if(t.which == 9){
-   return false;
+  if (t.which == 9) {
+    return false;
   }
- }
+}
 
- /**
-  * 
-  * @param {Date} date 
-  */
- function getScheduleOptions(date) {
+/**
+ * 
+ * @param {Date} date 
+ */
+function getScheduleOptions(date) {
   const dayOfWeek = date.getDay()
-  if(dayOfWeek === 6 || dayOfWeek === 0) {
-    console.log('Es fin de semana')
-    if(city !== null && city !== undefined && city === 'GDL') {
-      console.log('Options for GDL')
+  if (dayOfWeek === 6 || dayOfWeek === 0) {
+    if (city !== null && city !== undefined && city === 'GDL') {
       return { isWeekend: true, options: optionsWeekendGDL }
     }
     return { isWeekend: true, options: optionsWeekend }
   }
   return { isWeekend: false, options: normalOptions }
- }
- 
+}
+
 
 function showScheduleLabels(isWeekend, hours) {
-  if (hours.length <= 0){
+  if (hours.length <= 0) {
     document.getElementById("scheduleOutOfRangelbl").hidden = false
     document.getElementById("wekendLbl").hidden = true
   } else {
     document.getElementById("scheduleOutOfRangelbl").hidden = true
-    if(isWeekend) {
+    if (isWeekend) {
       document.getElementById("wekendLbl").hidden = false
     } else {
       document.getElementById("wekendLbl").hidden = true
@@ -69,13 +67,12 @@ function showScheduleLabels(isWeekend, hours) {
 }
 
 
- /**
- * Pupulate schedule
- */
+/**
+* Pupulate schedule
+*/
 function populateTodaySchedule() {
   // Populate calendar when user select: today
   const currentDate = new Date()
-  console.log(currentDate)
   const hour = currentDate.getHours() + 2
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
@@ -100,7 +97,6 @@ function populateTomorrowSchedule() {
   currentDate.setDate(currentDate.getDate() + 1);
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
-  console.log(currentDate)
   const schedule = getScheduleOptions(currentDate)
   var options = schedule.options.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   const calendar = document.getElementById("timeframe")
@@ -156,9 +152,9 @@ const amount = document.getElementById("amount")
 const amounts = document.getElementById("quantity").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
   card.onclick = function () {
-    if(card.value) {
+    if (card.value) {
       amount.value = card.value
-    }    
+    }
   }
 })
 
@@ -314,22 +310,24 @@ function getPaymentType() {
 /**
  * Get discount from cupon or discount for first buy.
  */
-function calculateDiscount(amount) {
+function calculateDiscount(amount, firstBuy) {
   const voucher = getDiscountByVoucherCode()
   if (voucher) {
     if (voucher.symbol === '$') {
       if (voucher.amount > 0) {
-        return { value: voucher.amount, byCupon: true, code: voucher.code }
+        return { value: voucher.amount, byCupon: true, code: voucher.code, firstBuy }
       }
     }
     if (voucher.symbol === '%') {
       const percentage = voucher.amount / 100
       const discount = amount * percentage
-      return { value: discount, byCupon: true, code: voucher.code }
+      return { value: discount, byCupon: true, code: voucher.code, firstBuy}
     }
   }
-
-  return { value: DISCOUNT_FIRST_BUY, byCupon: false }
+  if(firstBuy) {
+    return { value: DISCOUNT_FIRST_BUY, byCupon: false, firstBuy }
+  }
+  return { value: 0, byCupon: false, firstBuy }  
 }
 
 /**
@@ -345,12 +343,13 @@ function calculateTotalOfService(quantity, discount) {
 /**
  * Show the order summary.
  */
-function showOrderSummary() {
+async function showOrderSummary() {
   const quantity = getQuantity()
   const contactData = getContactInfo()
+  const firstBuy = await isFirstBuy(contactData.phone)
   const address = getAddress()
   const paymentType = getPaymentType()
-  const discount = calculateDiscount(quantity)
+  const discount = calculateDiscount(quantity, firstBuy)
   const total = calculateTotalOfService(quantity, discount)
   const schedule = getSchedule()
 
@@ -359,8 +358,10 @@ function showOrderSummary() {
 
   if (discount.byCupon) {
     document.getElementById("discountValue").textContent = "$" + discount.value + ", por usar tu cupón: " + discount.code
-  } else {
+  } else if (discount.firstBuy) {
     document.getElementById("discountValue").textContent = "$" + discount.value + ", por primera compra"
+  } else {
+    document.getElementById("discountValue").textContent = "$" + discount.value
   }
 
   document.getElementById("feeValue").textContent = "$" + FEE
@@ -473,7 +474,7 @@ function isValidAddress() {
     } else {
       document.getElementById("invalidZipCodeText").hidden = true
     }
-  }  
+  }
   if (address.address !== '' && zipCodeIsValid) {
     mixpanel.track("Selecciono Direccion", { "Dirección": address.address })
     return true
@@ -519,6 +520,7 @@ function getUrlService() {
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services',
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/sms',
+    urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services/${phoneNumber}/has-back-buy',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
@@ -526,6 +528,7 @@ function getUrlService() {
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1services',
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/sms',
+    urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/services/${phoneNumber}/has-back-buy',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
 
@@ -533,6 +536,7 @@ function getUrlService() {
     urlEvents: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/logs',
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services',
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/sms',
+    urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services/${phoneNumber}/has-back-buy',
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
@@ -544,8 +548,29 @@ function getUrlService() {
   return prod
 }
 
+
+function isFirstBuy(phoneNumber) {
+  const service = getUrlService()
+  const url = service.urlHasBuy.replace('${phoneNumber}', phoneNumber)
+  return fetch(url, {
+    mode: 'cors',
+    method: 'GET',
+    headers: {
+      'x-api-key': service.apikey
+    }
+  }).then(function (response) {
+    return response.text();
+  }).then(function (data) {
+      const json = JSON.parse(data)
+      return !json.hasBuyBack ? true : false 
+    })
+    .catch(function (err) {
+      console.log("ERROR:", err);
+      return true
+    });
+}
+
 function registerEvent(key, data) {
-  console.log(data)
   const service = getUrlService()
   const body = JSON.stringify({
     key,
@@ -566,7 +591,6 @@ function registerEvent(key, data) {
       console.log('data = ', data);
     })
     .catch(function (err) {
-      console.log('AN ERROR: ', data)
       console.error("ERROR:", err);
     });
 }
@@ -575,6 +599,7 @@ function makeRequest(data) {
   const service = getUrlService()
   const body = JSON.stringify(data)
   console.log('BODY REQUEST: ', body)
+  
   fetch(service.urlService, {
     mode: 'cors',
     method: 'POST',
@@ -590,21 +615,19 @@ function makeRequest(data) {
       console.log('data = ', data);
     })
     .catch(function (err) {
-      console.log('AN ERROR: ', data)
       console.error("ERROR:", err);
     });
   sendConfirmationSMS(data.customerData.phoneNumber)
-
-
 }
 
 /**
  * 
  */
-function createServiceOrder() {
+async function createServiceOrder() {
   const quantity = getQuantity()
-  const discount = calculateDiscount(quantity)
   const contactData = getContactInfo()
+  const firstBuy = await isFirstBuy(contactData.phone)
+  const discount = calculateDiscount(quantity, firstBuy)
   const address = getAddress()
   const paymentType = getPaymentType()
   const schedule = getSchedule()
@@ -651,7 +674,6 @@ function createServiceOrder() {
 
 
 function sendConfirmationSMS(phoneNumber) {
-  console.log("Send sms to client.")
   const service = getUrlService()
   var sms = 'Servicio agendado con éxito, recibirás un WhatsApp de confirmación antes de la hora de tu servicio. Gracias por usar OKBOY.'
   const body = {
@@ -672,5 +694,5 @@ function sendConfirmationSMS(phoneNumber) {
     })
     console.log('Confirmation SMS sent.')
   }
-  
+
 }

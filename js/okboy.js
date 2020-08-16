@@ -151,8 +151,9 @@ backButton.onclick = function () {
 const amount = document.getElementById("amount")
 const amounts = document.getElementById("quantity").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
+  console.log(card)
   card.onclick = function () {
-    if (card.value) {
+    if (card.type === 'radio' && card.value) {
       amount.value = card.value
     }
   }
@@ -231,16 +232,16 @@ function getSchedule() {
 /**
  * Get discount by voucher code.
  */
-function getDiscountByVoucherCode() {
-  var discount = null;
+async function getDiscountByVoucherCode(phoneNumber) {
   const field = document.getElementById("cuponCode")
   if (field && field.value) {
-    const voucher = vouchers[field.value.toUpperCase()]
+    const voucher = await checkPromocode(phoneNumber, field.value.toUpperCase()) 
     if (voucher) {
-      discount = { amount: voucher.amount, symbol: voucher.symbol, code: field.value }
+      voucher.code = field.value.toUpperCase()
+      return voucher
     }
   }
-  return discount
+  return null
 }
 
 /**
@@ -310,19 +311,11 @@ function getPaymentType() {
 /**
  * Get discount from cupon or discount for first buy.
  */
-function calculateDiscount(amount, firstBuy) {
-  const voucher = getDiscountByVoucherCode()
+async function calculateDiscount(amount, firstBuy, phoneNumber) {
+  const voucher = await getDiscountByVoucherCode(phoneNumber)
+  console.log(voucher)
   if (voucher) {
-    if (voucher.symbol === '$') {
-      if (voucher.amount > 0) {
-        return { value: voucher.amount, byCupon: true, code: voucher.code, firstBuy }
-      }
-    }
-    if (voucher.symbol === '%') {
-      const percentage = voucher.amount / 100
-      const discount = amount * percentage
-      return { value: discount, byCupon: true, code: voucher.code, firstBuy}
-    }
+    return { value: voucher.discount, byCupon: true, code: voucher.code, firstBuy }
   }
   if(firstBuy) {
     return { value: DISCOUNT_FIRST_BUY, byCupon: false, firstBuy }
@@ -349,7 +342,7 @@ async function showOrderSummary() {
   const firstBuy = await isFirstBuy(contactData.phone)
   const address = getAddress()
   const paymentType = getPaymentType()
-  const discount = calculateDiscount(quantity, firstBuy)
+  const discount = await calculateDiscount(quantity, firstBuy, contactData.phone)
   const total = calculateTotalOfService(quantity, discount)
   const schedule = getSchedule()
 
@@ -521,6 +514,7 @@ function getUrlService() {
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services',
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/sms',
     urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services/${phoneNumber}/has-back-buy',
+    urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
@@ -529,6 +523,7 @@ function getUrlService() {
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1services',
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/sms',
     urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/services/${phoneNumber}/has-back-buy',
+    urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
 
@@ -537,6 +532,7 @@ function getUrlService() {
     urlService: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services',
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/sms',
     urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services/${phoneNumber}/has-back-buy',
+    urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
@@ -548,6 +544,32 @@ function getUrlService() {
   return prod
 }
 
+function checkPromocode(phoneNumber, promocode) {
+  const service = getUrlService()
+  var url = service.urlPromocodes.replace('${phoneNumber}', phoneNumber)
+  url = url.replace('${promocode}', promocode)
+  return fetch(url, {
+    mode: 'cors',
+    method: 'GET',
+    headers: {
+      'x-api-key': service.apikey
+    }
+  }).then(function (response) {
+    if(response.status === 200) {
+      return response.text();
+    } 
+    return null
+  }).then(function (data) {
+      if(data) {
+        return JSON.parse(data)  
+      }
+      return null
+    })
+    .catch(function (err) {
+      console.log("ERROR:", err);
+      return null
+    });
+}
 
 function isFirstBuy(phoneNumber) {
   const service = getUrlService()

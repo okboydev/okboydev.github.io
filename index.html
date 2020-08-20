@@ -317,10 +317,14 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                             <input type="hidden" id="locality" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="sublocality" class="phone" type="text" aria-hidden="true"/>
                                             <input type="hidden" id="streetNumber" class="phone" type="text" aria-hidden="true"/>
-                                        </div>
-                                        <div style="text-align: left;">
+                                            <input type="hidden" id="addressIsFix" class="phone" type="text" aria-hidden="true" value="false"/>
+                                            <br/>
                                             <span class="phone">Comentarios o referencias:</span>
                                             <input id="reference" class="phone" type="text" placeholder="Ej: Fachada Azul" aria-hidden="true"/>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <span class="phone" id="cleanAddress" style="color:blue; text-decoration: underline blue">Limpiar</span>
+
                                         </div>
                                         <span class="lit" id="invalidZipCodeText" hidden>Por el momento no contamos con cobertura en tu localidad, estamos trabajando para expandir nuestra cobertura.</span>
                                     </div>
@@ -655,6 +659,7 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
             document.getElementById('state').value = place.address_components[i].long_name;   
         } else if (place.address_components[i].types[j] == "postal_code") {
           document.getElementById('zipCode').value = place.address_components[i].long_name;
+          document.getElementById('addressIsFix').value = 'false'
         }  
       }
     }

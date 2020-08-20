@@ -2,7 +2,6 @@ const ENV = 'prod'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 
-
 const normalOptions = [
   { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
   { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9 },
@@ -104,6 +103,22 @@ function populateTomorrowSchedule() {
   showScheduleLabels(schedule.isWeekend, options)
 }
 
+
+const cleanAddress = document.getElementById("cleanAddress")
+cleanAddress.onclick = function() {
+  document.getElementById("address").value = ''
+  document.getElementById("street").value = ''
+  document.getElementById("sublocality").value = ''
+  document.getElementById('locality').value = ''
+  document.getElementById('state').value = ''
+  document.getElementById('zipCode').value = ''
+  document.getElementById('latitude').value = ''
+  document.getElementById('longitude').value = ''
+  document.getElementById('streetNumber').value = ''
+  document.getElementById('reference').value = ''
+  document.getElementById('addressIsFix').value = 'false'  
+}
+
 const tomorrow = document.getElementById("manana");
 tomorrow.onclick = function () {
   const dayOfService = document.getElementById("dayOfService")
@@ -151,7 +166,6 @@ backButton.onclick = function () {
 const amount = document.getElementById("amount")
 const amounts = document.getElementById("quantity").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
-  console.log(card)
   card.onclick = function () {
     if (card.type === 'radio' && card.value) {
       amount.value = card.value
@@ -271,6 +285,8 @@ function getAddress() {
   const longitude = document.getElementById('longitude')
   const streetNumber = document.getElementById('streetNumber')
   const reference = document.getElementById('reference')
+  const addressIsFix = document.getElementById('addressIsFix').value === 'true'
+
   data = {
     address: address.value,
     street: street.value,
@@ -281,7 +297,8 @@ function getAddress() {
     zipCode: zipCode.value,
     latitude: latitude.value,
     longitude: longitude.value,
-    reference: reference.value
+    reference: reference.value,
+    addressIsFix
   }
   return data
 }
@@ -313,7 +330,6 @@ function getPaymentType() {
  */
 async function calculateDiscount(amount, firstBuy, phoneNumber) {
   const voucher = await getDiscountByVoucherCode(phoneNumber)
-  console.log(voucher)
   if (voucher) {
     return { value: voucher.discount, byCupon: true, code: voucher.code, firstBuy }
   }
@@ -361,13 +377,16 @@ async function showOrderSummary() {
   document.getElementById("totalValue").textContent = "$" + total
   document.getElementById("nameValue").textContent = contactData.name
   document.getElementById("phoneValue").textContent = contactData.phone
-
   var addressText = ""
-  if (address.zipCode) {
-    addressText = address.address + ", CP. " + address.zipCode
-  } else {
+  console.log(address)
+  if(address.addressIsFix) {
+    addressText = address.address + ", " + address.locality + ", " + address.state 
+  } else  {
     addressText = address.address
   }
+  if (address.zipCode) {
+    addressText = addressText + ", CP. " + address.zipCode
+  }  
   if (address.reference) {
     addressText = addressText + ". " + address.reference
   }
@@ -446,9 +465,55 @@ function isValidQuantity() {
   return false
 }
 
+function fillAddresses(addresses) {
+  if(addresses && addresses.length > 0) {
+    if(addresses.length === 1) {
+      const previousAddres = addresses[0]
+      if(previousAddres.latitude != '00000000000' &&  previousAddres.longitude != '00000000000' && document.getElementById("address").value === '') {
+        const addressText = previousAddres.street + ' ' +  previousAddres.numExt + ' ' +previousAddres.suburb + ' ' + previousAddres.municipality + ' ' + previousAddres.state
+        document.getElementById("address").value = addressText
+        document.getElementById("street").value = previousAddres.street
+        document.getElementById("sublocality").value = previousAddres.suburb
+        document.getElementById('locality').value = previousAddres.municipality
+        document.getElementById('state').value = previousAddres.state
+        document.getElementById('zipCode').value = previousAddres.zipcode
+        document.getElementById('streetNumber').value = previousAddres.numExt
+        document.getElementById('reference').value =previousAddres.reference
+        document.getElementById('latitude').value = previousAddres.latitude
+        document.getElementById('longitude').value = previousAddres.longitude
+        document.getElementById('addressIsFix').value = 'true'
+
+      }
+    }
+  }
+  
+}
+
+function fixDataAddress(address) {
+  console.log('Se va a corregir: ', address)
+  if (address.state === '' || address.locality === '' || address.sublocality === '') {
+    console.log('Entra a corrección')
+    findZipCode(address.zipCode).then(data => {
+      if(Array.isArray(data)){
+        const item = data[0]
+        console.log('ENcontrado: ', item)
+        document.getElementById("sublocality").value = item.response.asentamiento
+        document.getElementById('locality').value = item.response.municipio
+        document.getElementById('state').value = item.response.estado
+        document.getElementById('addressIsFix').value = 'true'
+      }
+    })
+  }
+}
+
 function isValidContact() {
   const contactData = getContactInfo()
   if (contactData.name && (contactData.phone && contactData.phone.length >= 10)) {
+    getAddresses(contactData.phone).then( addresses => {
+      if(addresses){
+        fillAddresses(addresses)
+      }
+    })
     mixpanel.track("Lleno Datos de Contacto", { "Nombre": contactData.name, "Telefono": contactData.phone })
     return true
   }
@@ -469,6 +534,7 @@ function isValidAddress() {
     }
   }
   if (address.address !== '' && zipCodeIsValid) {
+    fixDataAddress(address)
     mixpanel.track("Selecciono Direccion", { "Dirección": address.address })
     return true
   }
@@ -515,6 +581,8 @@ function getUrlService() {
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/sms',
     urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services/${phoneNumber}/has-back-buy',
     urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
+    urlAddresses: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/customer/${phoneNumber}/address',
+    urlZipCode: 'https://api-sepomex.hckdrk.mx/query/info_cp/${zipCode}',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
@@ -524,6 +592,8 @@ function getUrlService() {
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/sms',
     urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/services/${phoneNumber}/has-back-buy',
     urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
+    urlAddresses: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/customer/${phoneNumber}/address',
+    urlZipCode: 'https://api-sepomex.hckdrk.mx/query/info_cp/${zipCode}',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
 
@@ -533,6 +603,8 @@ function getUrlService() {
     urlSms: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/sms',
     urlHasBuy: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services/${phoneNumber}/has-back-buy',
     urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
+    urlAddresses: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/customer/${phoneNumber}/address',
+    urlZipCode: 'https://api-sepomex.hckdrk.mx/query/info_cp/${zipCode}',
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
@@ -554,6 +626,55 @@ function checkPromocode(phoneNumber, promocode) {
     headers: {
       'x-api-key': service.apikey
     }
+  }).then(function (response) {
+    if(response.status === 200) {
+      return response.text();
+    } 
+    return null
+  }).then(function (data) {
+      if(data) {
+        return JSON.parse(data)  
+      }
+      return null
+    })
+    .catch(function (err) {
+      console.log("ERROR:", err);
+      return null
+    });
+}
+
+function getAddresses(phoneNumber) {
+  const service = getUrlService()
+  const url = service.urlAddresses.replace('${phoneNumber}', phoneNumber)
+  return fetch(url, {
+    mode: 'cors',
+    method: 'GET',
+    headers: {
+      'x-api-key': service.apikey
+    }
+  }).then(function (response) {
+    if(response.status === 200) {
+      return response.text();
+    } 
+    return null
+  }).then(function (data) {
+      if(data) {
+        return JSON.parse(data)  
+      }
+      return null
+    })
+    .catch(function (err) {
+      console.log("ERROR:", err);
+      return null
+    });
+}
+
+function findZipCode(zipCode) {
+  const service = getUrlService()
+  const url = service.urlZipCode.replace('${zipCode}', zipCode)
+  return fetch(url, {
+    mode: 'cors',
+    method: 'GET'
   }).then(function (response) {
     if(response.status === 200) {
       return response.text();

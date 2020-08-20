@@ -649,7 +649,7 @@ async function createServiceOrder() {
   const quantity = getQuantity()
   const contactData = getContactInfo()
   const firstBuy = await isFirstBuy(contactData.phone)
-  const discount = calculateDiscount(quantity, firstBuy)
+  const discount = await calculateDiscount(quantity, firstBuy)
   const address = getAddress()
   const paymentType = getPaymentType()
   const schedule = getSchedule()

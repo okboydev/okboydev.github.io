@@ -14,7 +14,7 @@ const normalOptions = [
   { value: '16:00:00', text: 'De: 03:00 pm a 04:00 pm', numeric: 15 },
   { value: '17:00:00', text: 'De: 04:00 pm a 05:00 pm', numeric: 16 }
 ]
-
+/** 
 const optionsWeekend = [
   { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
   { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9 },
@@ -23,11 +23,11 @@ const optionsWeekend = [
   { value: '13:00:00', text: 'De: 12:00 pm a 01:00 pm', numeric: 12 },
   { value: '14:00:00', text: 'De: 01:00 pm a 02:00 pm', numeric: 13 },
 ]
-
-const optionsWeekendGDL = [
+*/
+const optionsWeekend = [
   { value: '10:00:00', text: 'De: 08:00 am a 10:00 am', numeric: 8 },
   { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 9 },
-  { value: '14:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 110 }
+  { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 110 }
 ]
 
 document.onkeydown = function (t) {
@@ -43,9 +43,6 @@ document.onkeydown = function (t) {
 function getScheduleOptions(date) {
   const dayOfWeek = date.getDay()
   if (dayOfWeek === 6 || dayOfWeek === 0) {
-    if (city !== null && city !== undefined && city === 'GDL') {
-      return { isWeekend: true, options: optionsWeekendGDL }
-    }
     return { isWeekend: true, options: optionsWeekend }
   }
   return { isWeekend: false, options: normalOptions }

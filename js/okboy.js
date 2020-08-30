@@ -13,16 +13,7 @@ const normalOptions = [
   { value: '16:00:00', text: 'De: 03:00 pm a 04:00 pm', numeric: 15 },
   { value: '17:00:00', text: 'De: 04:00 pm a 05:00 pm', numeric: 16 }
 ]
-/** 
-const optionsWeekend = [
-  { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
-  { value: '10:00:00', text: 'De: 09:00 am a 10:00 am', numeric: 9 },
-  { value: '11:00:00', text: 'De: 10:00 am a 11:00 am', numeric: 10 },
-  { value: '12:00:00', text: 'De: 11:00 am a 12:00 pm', numeric: 11 },
-  { value: '13:00:00', text: 'De: 12:00 pm a 01:00 pm', numeric: 12 },
-  { value: '14:00:00', text: 'De: 01:00 pm a 02:00 pm', numeric: 13 },
-]
-*/
+
 const optionsWeekend = [
   { value: '10:00:00', text: 'De: 08:00 am a 10:00 am', numeric: 8 },
   { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 9 },
@@ -325,7 +316,7 @@ function getPaymentType() {
 /**
  * Get discount from cupon or discount for first buy.
  */
-async function calculateDiscount(amount, firstBuy, phoneNumber) {
+async function calculateDiscount(firstBuy, phoneNumber) {
   const voucher = await getDiscountByVoucherCode(phoneNumber)
   if (voucher) {
     return { value: voucher.discount, byCupon: true, code: voucher.code, firstBuy }
@@ -350,18 +341,37 @@ function calculateTotalOfService(quantity, discount) {
  * Show the order summary.
  */
 async function showOrderSummary() {
-  const quantity = getQuantity()
-  const contactData = getContactInfo()
-  const firstBuy = await isFirstBuy(contactData.phone)
-  const address = getAddress()
-  const paymentType = getPaymentType()
-  const discount = await calculateDiscount(quantity, firstBuy, contactData.phone)
-  const total = calculateTotalOfService(quantity, discount)
-  const schedule = getSchedule()
+  document.getElementById("feeValue").textContent = "$" + FEE
 
+  const schedule = getSchedule()
   document.getElementById("scheduleValue").textContent = schedule.day + ', ' + schedule.text
+
+  const contactData = getContactInfo()
+  document.getElementById("nameValue").textContent = contactData.name
+  document.getElementById("phoneValue").textContent = contactData.phone
+
+  const address = getAddress()
+  var addressText = ""
+  if (address.zipCode) {
+    addressText = address.address + ", CP. " + address.zipCode
+  } else {
+    addressText = address.address
+  }
+  if (address.reference) {
+    addressText = addressText + ". " + address.reference
+  }
+  document.getElementById("addressValue").textContent = addressText
+
+  const paymentType = getPaymentType()
+  document.getElementById("paymentTypeValue").textContent = paymentType.value
+
+  const quantity = getQuantity()
   document.getElementById("quantityValue").textContent = "$" + quantity
 
+  const firstBuy = await isFirstBuy(contactData.phone)
+  const discount = await calculateDiscount(firstBuy, contactData.phone)
+  const total = calculateTotalOfService(quantity, discount)
+  
   if (discount.byCupon) {
     document.getElementById("discountValue").textContent = "$" + discount.value + ", por usar tu cupón: " + discount.code
   } else if (discount.firstBuy) {
@@ -370,26 +380,7 @@ async function showOrderSummary() {
     document.getElementById("discountValue").textContent = "$" + discount.value
   }
 
-  document.getElementById("feeValue").textContent = "$" + FEE
   document.getElementById("totalValue").textContent = "$" + total
-  document.getElementById("nameValue").textContent = contactData.name
-  document.getElementById("phoneValue").textContent = contactData.phone
-  var addressText = ""
-  console.log(address)
-  if(address.addressIsFix) {
-    addressText = address.address + ", " + address.locality + ", " + address.state 
-  } else  {
-    addressText = address.address
-  }
-  if (address.zipCode) {
-    addressText = addressText + ", CP. " + address.zipCode
-  }  
-  if (address.reference) {
-    addressText = addressText + ". " + address.reference
-  }
-  document.getElementById("addressValue").textContent = addressText
-  document.getElementById("paymentTypeValue").textContent = paymentType.value
-
   mixpanel.track("Llego al Resumen de Pedido")
 }
 

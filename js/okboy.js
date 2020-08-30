@@ -758,7 +758,7 @@ async function createServiceOrder() {
   const quantity = getQuantity()
   const contactData = getContactInfo()
   const firstBuy = await isFirstBuy(contactData.phone)
-  const discount = await calculateDiscount(quantity, firstBuy)
+  const discount = await calculateDiscount(firstBuy, contactData.phone)
   const address = getAddress()
   const paymentType = getPaymentType()
   const schedule = getSchedule()
@@ -792,15 +792,16 @@ async function createServiceOrder() {
     data.customerData.address.reference = address.reference
   }
 
+  if (discount.byCupon) {
+    data.promocode = discount.code
+  }
+
   makeRequest(data)
 
   mixpanel.track("Realizo Pedido", { "Información de Pedido": data })
   dataLayer.push({ 'event': 'realizopedido' })
   // Reg on fb.
   fbq('track', 'CompleteRegistration', data);
-  // Reg event
-  data.discount = discount
-  registerEvent('NEW_SERVICE', data)
 }
 
 

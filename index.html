@@ -255,12 +255,12 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                         <input class="card" type="radio" id="stationary" name="service" value="stationary" aria-hidden="true">
                                         <label class="card service" for="stationary">
                                             <img src="assets/estacionario-circle.png">
-                                            Estacionario
+                                            <b>Estacionario</b>
                                         </label>
                                         <input class="card" type="radio" id="cylinder" name="service" value="cylinder" aria-hidden="true">
                                         <label class="card service" for="cylinder">
                                             <img src="assets/cilindro-circle.png">
-                                            Cilindro
+                                            <b>Cilindro</b>
                                         </label>
                                         <br> <br>
                                         <div style="text-align: left;" hidden id="serviceTypeLabel">
@@ -273,19 +273,34 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="mstwo" class="section">
                                     <div class="fix"></div><div class="inside" id="quantity">
-                                        <span class="tit">¿Cuánto necesitas?</span><br>
-                                        <span class="name">$</span>
-                                        <input type="number" placeholder="400" aria-hidden="true" id="amount" maxlength="4" minlength="3" min="400" max="5000" value="400"/><br>
-                                        <span style="opacity: .8;font-size: .85em;">Monto minímo: $400</span><br>
-                                        <input class="card" type="radio" id="qty500" name="qty" value="500" aria-hidden="true">
-                                        <label class="card" for="qty500">$500</label>
-                                        <input class="card" type="radio" id="qty700" name="qty" value="700" aria-hidden="true">
-                                        <label class="card" for="qty700">$700</label>
-                                        <input class="card" type="radio" id="qty1000" name="qty" value="1000" aria-hidden="true">
-                                        <label class="card" for="qty1000">$1000</label>
-                                        <input class="card" type="radio" id="qty2000" name="qty" value="2000" aria-hidden="true">
-                                        <label class="card" for="qty2000">$2000</label>
+                                        <span class="tit">¿Cuánto necesitas?</span><br>    
+                                        <div id="stationarySection">
+                                            <span class="name">$</span>
+                                            <input type="number" placeholder="400" aria-hidden="true" id="amount" maxlength="4" minlength="3" min="400" max="5000" value="400"/><br>
+                                            <span style="opacity: .8;font-size: .85em;">Monto minímo: $400</span><br>
+                                            <input class="card" type="radio" id="qty500" name="qty" value="500" aria-hidden="true">
+                                            <label class="card" for="qty500">$500</label>
+                                            <input class="card" type="radio" id="qty700" name="qty" value="700" aria-hidden="true">
+                                            <label class="card" for="qty700">$700</label>
+                                            <input class="card" type="radio" id="qty1000" name="qty" value="1000" aria-hidden="true">
+                                            <label class="card" for="qty1000">$1000</label>
+                                            <input class="card" type="radio" id="qty2000" name="qty" value="2000" aria-hidden="true">
+                                            <label class="card" for="qty2000">$2000</label>
+                                        </div>
+                                        <div id="cylinderSection" hidden>
+                                            <input class="card" type="radio" id="cylinder10" name="service" value="300" aria-hidden="true">
+                                            <label class="card service" for="cylinder10">
+                                                <img src="assets/cilindro-circle.png">
+                                                <b>10 Kg</b>
+                                            </label>
+                                            <input class="card" type="radio" id="cylinder20" name="service" value="400" aria-hidden="true">
+                                            <label class="card service" for="cylinder20">
+                                                <img src="assets/cilindro-circle.png">
+                                                <b>20 Kg</b>
+                                            </label>
+                                        </div>
                                         <br/>
+
                                         <span class="tit">¿Tienes un cupón de descuento?, ingresalo aquí:</span>
                                         <input class="name" type="text" placeholder="100CDMX" aria-hidden="true" id="cuponCode"/>
                                     </div>
@@ -357,7 +372,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="msseven" class="section">
                                     <div class="fix"></div><div class="inside" style="text-align: left;">
-                                        <span class="tit">Ya casi, verifica tu pedido:</span><br> <br>
+                                        <span class="tit" style="font-size: 1.3em">Ya casi, verifica tu pedido:</span><br> <br>
+                                        <span style="font-weight: 600;">Servicio:</span>&nbsp;<span id="serviceTypeValue"></span><br>
                                         <span style="font-weight: 600;">Cuando:</span>&nbsp;<span id="scheduleValue"></span><br>
                                         <span style="font-weight: 600;">Cantidad:</span>&nbsp;<span id="quantityValue"></span><br>
                                         <span style="font-weight: 600;">Descuento:</span>&nbsp;<span id="discountValue"></span><br>

@@ -1,6 +1,7 @@
 const ENV = 'prod'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
+var cylinderSizeSelected = 0
 
 const normalOptions = [
   { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
@@ -124,19 +125,16 @@ today.onclick = function () {
 // When select cylinder.
 const cylinder = document.getElementById("cylinder");
 cylinder.onclick = function () {
-  mixpanel.track("Selecciono Cilindro", { "Tipo de Gas": "Cilindro" })
-  document.getElementById("serviceTypeLabel").hidden = false
-  document.getElementById("nextbutton").textContent = 'Cerrar'
-  document.getElementById("nextbutton").onclick = function () { MicroModal.close('createorder') }
+  document.getElementById("stationarySection").hidden = true
+  document.getElementById("cylinderSection").hidden = false
+  toNEXT()
 }
 
 // When select stationary
 const stationary = document.getElementById("stationary");
 stationary.onclick = function () {
-  document.getElementById("serviceTypeLabel").hidden = true
-  document.getElementById("nextbutton").hidden = false
-  document.getElementById("nextbutton").textContent = 'Continuar'
-  document.getElementById("nextbutton").onclick = function () { toNEXT() }
+  document.getElementById("stationarySection").hidden = false
+  document.getElementById("cylinderSection").hidden = true
   toNEXT()
 }
 
@@ -151,11 +149,22 @@ backButton.onclick = function () {
   }
 }
 
+// AMOUNT FOR STATIONARY
 const amount = document.getElementById("amount")
-const amounts = document.getElementById("quantity").querySelectorAll("input")
+const amounts = document.getElementById("stationarySection").querySelectorAll("input")
 Array.from(amounts).forEach(card => {
   card.onclick = function () {
     if (card.type === 'radio' && card.value) {
+      amount.value = card.value
+    }
+  }
+})
+const amountsCylinder = document.getElementById("cylinderSection").querySelectorAll("input")
+Array.from(amountsCylinder).forEach(card => {
+  card.onclick = function () {
+    if (card.type === 'radio' && card.value) {
+      cylinderSizeSelected = card.id.slice(-2)
+      console.log(cylinderSizeSelected)
       amount.value = card.value
     }
   }
@@ -169,6 +178,7 @@ amount.onkeyup = function () {
     }
   })
 }
+// END AMOUNT FOR STATIONARY
 
 
 // When select chash
@@ -341,6 +351,17 @@ function calculateTotalOfService(quantity, discount) {
  * Show the order summary.
  */
 async function showOrderSummary() {
+  const serviceType = getServiceType()
+  if(serviceType === 'stationary') {
+    document.getElementById("serviceTypeValue").textContent = 'Recarga de Gas Estacionario'
+  } else {
+    if(cylinderSizeSelected > 0) {
+      document.getElementById("serviceTypeValue").textContent = 'Recarga de Cilindro ' + `(${cylinderSizeSelected} KG)`  
+
+    } else {
+      document.getElementById("serviceTypeValue").textContent = 'Recarga de Cilindro'  
+    }
+  }
   document.getElementById("feeValue").textContent = "$" + FEE
 
   const schedule = getSchedule()
@@ -418,9 +439,13 @@ function isValidStep(step) {
 
 function isValidServiceType() {
   const serviceType = getServiceType()
-  if (serviceType && serviceType === 'stationary') {
-    mixpanel.track("Selecciono Tipo de Gas Estacionario", { "Tipo de Gas": "Estacionario" })
-    return true
+  if (serviceType){
+    if( serviceType === 'stationary' ) {
+      mixpanel.track("Selecciono Tipo de Gas Estacionario", { "Tipo de Gas": "Estacionario" })
+    } else {
+      mixpanel.track("Selecciono Cilindro", { "Tipo de Gas": "Cilindro" })
+    }    
+    return true  
   }
   return false
 }
@@ -445,11 +470,16 @@ function isValidSchedule() {
 }
 
 function isValidQuantity() {
+  const serviceType = getServiceType
   const quantity = getQuantity()
-  if (quantity >= 400) {
-    mixpanel.track("Selecciono Cantidad de Gas", { "Cantidad": quantity })
+  if(serviceType === 'stationary') {
+    if (quantity >= 400) {
+      mixpanel.track("Selecciono Cantidad de Gas", { "Cantidad": quantity })
+      return true
+    }
+  } else {
     return true
-  }
+  }  
   return false
 }
 
@@ -796,7 +826,7 @@ async function createServiceOrder() {
     data.promocode = discount.code
   }
 
-  makeRequest(data)
+  //ma  keRequest(data)
 
   mixpanel.track("Realizo Pedido", { "Información de Pedido": data })
   dataLayer.push({ 'event': 'realizopedido' })

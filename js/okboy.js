@@ -801,7 +801,7 @@ async function createServiceOrder() {
   mixpanel.track("Realizo Pedido", { "Información de Pedido": data })
   dataLayer.push({ 'event': 'realizopedido' })
   // Reg on fb.
-  fbq('track', 'CompleteRegistration', data);
+  fbq('track', 'Purchase', {value: 45.00, currency: 'MXN'});
 }
 
 

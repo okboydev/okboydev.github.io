@@ -394,21 +394,33 @@ function isValidStep(step) {
   switch (step) {
     case 1:
       isValidate = isValidServiceType()
+      if(isValidate) {
+        fbq('track', 'Lead');
+      }      
       break;
     case 2:
       isValidate = isValidQuantity()
       break;
     case 3:
       isValidate = isValidContact()
+      if(isValidate) {
+        fbq('track', 'Contact'); 
+      }
       break;
     case 4:
       isValidate = isValidAddress()
       break;
     case 5:
       isValidate = isValidSchedule()
+      if(isValidate) {
+        fbq('track', 'Schedule'); 
+      }
       break;
     case 6:
       isValidate = isValidPaymentMethod()
+      if(isValidate) {
+        fbq('track', 'AddPaymentInfo');  
+      }
       break;
     default:
       break;

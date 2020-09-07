@@ -17,7 +17,7 @@ const normalOptions = [
 const optionsWeekend = [
   { value: '10:00:00', text: 'De: 08:00 am a 10:00 am', numeric: 8 },
   { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 9 },
-  { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 110 }
+  { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 12 }
 ]
 
 document.onkeydown = function (t) {

@@ -865,7 +865,7 @@ function sendEmail(name, phone, amount, discount, total, address, schedule, paym
     mode: 'cors',
     method: 'POST',
     body: JSON.stringify({
-      to: 'julio@vetta.io, didier@vetta.io, christian@vetta.io, hola@okboy.app, ventas@vetta.io, victorh@vetta,io',
+      to: 'julio@vetta.io, didier@vetta.io, christian@vetta.io, hola@okboy.app, ventas@okoby.app, victorh@vetta.io',
       subject: 'Cliente Potencial - OKBOY',
       message: message,
       isHtml: true

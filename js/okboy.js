@@ -18,7 +18,7 @@ const normalOptions = [
 const optionsWeekend = [
   { value: '10:00:00', text: 'De: 08:00 am a 10:00 am', numeric: 8 },
   { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 9 },
-  { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 110 }
+  { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 12 }
 ]
 
 document.onkeydown = function (t) {
@@ -393,16 +393,19 @@ async function showOrderSummary() {
   const discount = await calculateDiscount(firstBuy, contactData.phone)
   const total = calculateTotalOfService(quantity, discount)
   
+  var discountText = ''
   if (discount.byCupon) {
-    document.getElementById("discountValue").textContent = "$" + discount.value + ", por usar tu cupón: " + discount.code
+    discountText = "$" + discount.value + ", por usar tu cupón: " + discount.code
   } else if (discount.firstBuy) {
-    document.getElementById("discountValue").textContent = "$" + discount.value + ", por primera compra"
+    discountText = "$" + discount.value + ", por primera compra"
   } else {
-    document.getElementById("discountValue").textContent = "$" + discount.value
+    discountText = "$" + discount.value
   }
+  document.getElementById("discountValue").textContent = discountText
 
   document.getElementById("totalValue").textContent = "$" + total
   mixpanel.track("Llego al Resumen de Pedido")
+  sendEmail(contactData.name, contactData.phone, quantity, discountText, total, addressText, schedule.day + ', ' + schedule.text, paymentType.value)
 }
 
 /**
@@ -415,21 +418,33 @@ function isValidStep(step) {
   switch (step) {
     case 1:
       isValidate = isValidServiceType()
+      if(isValidate) {
+        fbq('track', 'Lead');
+      }      
       break;
     case 2:
       isValidate = isValidQuantity()
       break;
     case 3:
       isValidate = isValidContact()
+      if(isValidate) {
+        fbq('track', 'Contact'); 
+      }
       break;
     case 4:
       isValidate = isValidAddress()
       break;
     case 5:
       isValidate = isValidSchedule()
+      if(isValidate) {
+        fbq('track', 'Schedule'); 
+      }
       break;
     case 6:
       isValidate = isValidPaymentMethod()
+      if(isValidate) {
+        fbq('track', 'AddPaymentInfo');  
+      }
       break;
     default:
       break;
@@ -601,6 +616,7 @@ function getUrlService() {
     urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
     urlAddresses: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/develop/v1/customer/${phoneNumber}/address',
     urlZipCode: 'https://api-sepomex.hckdrk.mx/query/info_cp/${zipCode}',
+    urlEmail: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/mails',
     apikey: 'HrwtPKFdr42LrRbRWlHV3alw5iyN3XFo6Ggbm6ry'
   }
 
@@ -612,6 +628,7 @@ function getUrlService() {
     urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
     urlAddresses: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/sandbox/v1/customer/${phoneNumber}/address',
     urlZipCode: 'https://api-sepomex.hckdrk.mx/query/info_cp/${zipCode}',
+    urlEmail: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/mails',
     apikey: '48FofE5GOB7mw9GL9nvi27rZ7yt2CtKE5ouM7g2A'
   }
 
@@ -623,6 +640,7 @@ function getUrlService() {
     urlPromocodes: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/services/promocodes/${promocode}/discount?phoneNumber=${phoneNumber}',
     urlAddresses: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/customer/${phoneNumber}/address',
     urlZipCode: 'https://api-sepomex.hckdrk.mx/query/info_cp/${zipCode}',
+    urlEmail: 'https://obduqr52wi.execute-api.us-west-2.amazonaws.com/production/v1/mails',
     apikey: 'NH4p55Ijpu6ymR6Y0ik0j5N4UrAQIiGaE5JwOS19'
   }
 
@@ -831,7 +849,7 @@ async function createServiceOrder() {
   mixpanel.track("Realizo Pedido", { "Información de Pedido": data })
   dataLayer.push({ 'event': 'realizopedido' })
   // Reg on fb.
-  fbq('track', 'CompleteRegistration', data);
+  fbq('track', 'Purchase', {value: 45.00, currency: 'MXN'});
 }
 
 
@@ -857,4 +875,36 @@ function sendConfirmationSMS(phoneNumber) {
     console.log('Confirmation SMS sent.')
   }
 
+}
+
+
+function sendEmail(name, phone, amount, discount, total, address, schedule, paymentType) {
+  var message = '<b> Este es un cliente potencial de OKBOY: </b> <br>'
+    + '<b> Nombre: </b>' + name + ' <br>'
+    + '<b> Télefono: </b>' + phone + ' <br>'
+    + '<b> Dirección del servicio: </b>' + address + ' <br>'
+    + '<b> Cantidad de Gas: </b> $' + amount + ' <br>'
+    + '<b> Descuento: </b>' +  discount + ' <br>' 
+    + '<b> Total a pagar: </b> $' +  total + ' <br>' 
+    + '<b> Fecha y Hora: </b>' + schedule + ' <br>'
+    + '<b> Forma de Pago: </b>' + paymentType + ' <br>'
+
+
+  const service = getUrlService()
+  fetch(service.urlEmail, {
+    mode: 'cors',
+    method: 'POST',
+    body: JSON.stringify({
+      to: 'julio@vetta.io, didier@vetta.io, christian@vetta.io, hola@okboy.app, ventas@okboy.app, victorh@vetta.io',
+      subject: 'Cliente Potencial - OKBOY',
+      message: message,
+      isHtml: true
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': service.apikey
+    }
+  }).then(function (response) {
+    console.log(response)
+  })
 }

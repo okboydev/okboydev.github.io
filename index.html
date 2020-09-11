@@ -272,8 +272,8 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                 </div>
                                 <div id="mstwo" class="section">
                                     <div class="fix"></div><div class="inside" id="quantity">
-                                        <span class="tit">¿Cuánto necesitas?</span><br>    
                                         <div id="stationarySection">
+                                            <span class="tit" style="font-size: 1.25em;">¿Cuánto necesitas?</span><br>
                                             <span class="name">$</span>
                                             <input type="number" placeholder="400" aria-hidden="true" id="amount" maxlength="4" minlength="3" min="400" max="5000" value="400"/><br>
                                             <span style="opacity: .8;font-size: .85em;">Monto minímo: $400</span><br>
@@ -285,22 +285,25 @@ logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
                                             <label class="card" for="qty1000">$1000</label>
                                             <input class="card" type="radio" id="qty2000" name="qty" value="2000" aria-hidden="true">
                                             <label class="card" for="qty2000">$2000</label>
+                                            <br/>
                                         </div>
-                                        <div id="cylinderSection" hidden>
-                                            <input class="card" type="radio" id="cylinder10" name="service" value="300" aria-hidden="true">
-                                            <label class="card service" for="cylinder10">
-                                                <img src="assets/cilindro-circle.png">
-                                                <b>10 Kg</b>
-                                            </label>
-                                            <input class="card" type="radio" id="cylinder20" name="service" value="400" aria-hidden="true">
-                                            <label class="card service" for="cylinder20">
-                                                <img src="assets/cilindro-circle.png">
-                                                <b>20 Kg</b>
-                                            </label>
-                                        </div>
-                                        <br/>
 
-                                        <span class="tit">¿Tienes un cupón de descuento?, ingresalo aquí:</span>
+                                        <div id="cylinderSection" hidden>
+                                            <span class="tit" style="font-size: 1.25em;">¿De qué tamaño lo necesitas?</span><br>    
+                                            <input class="card" type="radio" id="cylinder10" name="qty" value="300" aria-hidden="true">
+                                            <label class="card" for="cylinder10">*10 Kg</label>
+                                            <input class="card" type="radio" id="cylinder20" name="qty" value="400" aria-hidden="true">
+                                            <label class="card" for="cylinder20">20 Kg</label>
+                                            <input class="card" type="radio" id="cylinder30" name="qty" value="600" aria-hidden="true">
+                                            <label class="card" for="cylinder30">30 kg</label>
+                                            <br/>
+                                            <span style="opacity: .8;font-size: .85em;">* Por el momento solo en CdMx</span><br>
+                                            <br/>
+                                            <span style="font-weight: 600;" id="cylinderPriceText" hidden>Precio:</span>&nbsp;<span id="cylinderPrice"></span><br>
+                                            <br/> <br/>
+                                        </div>
+                                        
+                                        <span class="tit" style="font-size: 1.25em;">¿Tienes un cupón?, ingresa el código aquí:</span>
                                         <input class="name" type="text" placeholder="100CDMX" aria-hidden="true" id="cuponCode"/>
                                     </div>
                                 </div>

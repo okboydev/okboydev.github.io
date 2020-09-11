@@ -2,6 +2,7 @@ const ENV = 'prod'
 const DISCOUNT_FIRST_BUY = 100.0
 const FEE = 20.0
 var cylinderSizeSelected = 0
+var cylinderFlow = false
 
 const normalOptions = [
   { value: '09:00:00', text: 'De: 08:00 am a 09:00 am', numeric: 8 },
@@ -21,6 +22,16 @@ const optionsWeekend = [
   { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 12 }
 ]
 
+const cylinderOptions = [
+  { value: '11:00:00', text: 'De: 08:00 am a 11:00 am', numeric: 9 },
+  { value: '14:00:00', text: 'De: 11:00 am a 14:00 pm', numeric: 12 },
+  { value: '17:00:00', text: 'De: 14:00 am a 17:00 am', numeric: 15 },
+]
+
+const cylinderOptionsWeekend = [
+  { value: '14:00:00', text: 'De: 08:00 am a 14:00 am', numeric: 11 },
+]
+
 document.onkeydown = function (t) {
   if (t.which == 9) {
     return false;
@@ -32,11 +43,23 @@ document.onkeydown = function (t) {
  * @param {Date} date 
  */
 function getScheduleOptions(date) {
+  console.log('cylinderFlow: ', cylinderFlow)
+  var isWeekend = false
   const dayOfWeek = date.getDay()
   if (dayOfWeek === 6 || dayOfWeek === 0) {
-    return { isWeekend: true, options: optionsWeekend }
+    isWeekend = true
   }
-  return { isWeekend: false, options: normalOptions }
+  if(cylinderFlow) {
+    if (isWeekend) {
+      return { isWeekend: isWeekend, options: cylinderOptionsWeekend }
+    }
+    return { isWeekend: isWeekend, options: cylinderOptions }
+  } else {
+    if (isWeekend) {
+      return { isWeekend: isWeekend, options: optionsWeekend }
+    }
+    return { isWeekend: isWeekend, options: normalOptions }
+  }  
 }
 
 
@@ -125,6 +148,7 @@ today.onclick = function () {
 // When select cylinder.
 const cylinder = document.getElementById("cylinder");
 cylinder.onclick = function () {
+  cylinderFlow = true
   document.getElementById("stationarySection").hidden = true
   document.getElementById("cylinderSection").hidden = false
   toNEXT()
@@ -133,6 +157,7 @@ cylinder.onclick = function () {
 // When select stationary
 const stationary = document.getElementById("stationary");
 stationary.onclick = function () {
+  cylinderFlow = false
   document.getElementById("stationarySection").hidden = false
   document.getElementById("cylinderSection").hidden = true
   toNEXT()
@@ -164,8 +189,9 @@ Array.from(amountsCylinder).forEach(card => {
   card.onclick = function () {
     if (card.type === 'radio' && card.value) {
       cylinderSizeSelected = card.id.slice(-2)
-      console.log(cylinderSizeSelected)
       amount.value = card.value
+      document.getElementById("cylinderPrice").textContent = '$' + card.value
+      document.getElementById("cylinderPriceText").hidden = false
     }
   }
 })
@@ -888,7 +914,7 @@ function sendEmail(name, phone, amount, discount, total, address, schedule, paym
     + '<b> Total a pagar: </b> $' +  total + ' <br>' 
     + '<b> Fecha y Hora: </b>' + schedule + ' <br>'
     + '<b> Forma de Pago: </b>' + paymentType + ' <br>'
-
+  /*
 
   const service = getUrlService()
   fetch(service.urlEmail, {
@@ -907,4 +933,5 @@ function sendEmail(name, phone, amount, discount, total, address, schedule, paym
   }).then(function (response) {
     console.log(response)
   })
+  */
 }

@@ -37,7 +37,7 @@ function getScheduleOptions(date) {
   if (dayOfWeek === 6 || dayOfWeek === 0) {
     return { isWeekend: true, options: optionsWeekend, isFree: false }
   }
-  if(dayOfMonth === 15 && monthOfYear === 8) {
+  if(dayOfMonth === 16 && monthOfYear === 8) {
     return { isWeekend: false, options: optionsWeekend, isFree: true }
   }
   return { isWeekend: false, options: normalOptions, isFree: false }

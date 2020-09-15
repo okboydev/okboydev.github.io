@@ -32,19 +32,30 @@ document.onkeydown = function (t) {
  */
 function getScheduleOptions(date) {
   const dayOfWeek = date.getDay()
+  const dayOfMonth = date.getDate()
+  const monthOfYear = date.getMonth()
   if (dayOfWeek === 6 || dayOfWeek === 0) {
-    return { isWeekend: true, options: optionsWeekend }
+    return { isWeekend: true, options: optionsWeekend, isFree: false }
   }
-  return { isWeekend: false, options: normalOptions }
+  if(dayOfMonth === 15 && monthOfYear === 8) {
+    return { isWeekend: false, options: optionsWeekend, isFree: true }
+  }
+  return { isWeekend: false, options: normalOptions, isFree: false }
 }
 
 
-function showScheduleLabels(isWeekend, hours) {
+function showScheduleLabels(isWeekend, hours, isFree) {
   if (hours.length <= 0) {
     document.getElementById("scheduleOutOfRangelbl").hidden = false
     document.getElementById("wekendLbl").hidden = true
+    document.getElementById("freedayLbl").hidden = true
   } else {
     document.getElementById("scheduleOutOfRangelbl").hidden = true
+    if (isFree){
+      document.getElementById("freedayLbl").hidden = false
+    } else {
+      document.getElementById("freedayLbl").hidden = true
+    }
     if (isWeekend) {
       document.getElementById("wekendLbl").hidden = false
     } else {
@@ -71,7 +82,7 @@ function populateTodaySchedule() {
   if (hours.length > 0) {
     options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   }
-  showScheduleLabels(schedule.isWeekend, hours)
+  showScheduleLabels(schedule.isWeekend, hours, schedule.isFree)
   const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
 }
@@ -88,7 +99,7 @@ function populateTomorrowSchedule() {
   var options = schedule.options.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
-  showScheduleLabels(schedule.isWeekend, options)
+  showScheduleLabels(schedule.isWeekend, options, schedule.isFree)
 }
 
 

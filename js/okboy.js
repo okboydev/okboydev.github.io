@@ -18,7 +18,7 @@ const normalOptions = [
 
 const optionsWeekend = [
   { value: '10:00:00', text: 'De: 08:00 am a 10:00 am', numeric: 8 },
-  { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 9 },
+  { value: '12:00:00', text: 'De: 10:00 am a 12:00 am', numeric: 10 },
   { value: '14:00:00', text: 'De: 12:00 am a 14:00 am', numeric: 12 }
 ]
 
@@ -45,30 +45,49 @@ document.onkeydown = function (t) {
 function getScheduleOptions(date) {
   console.log('cylinderFlow: ', cylinderFlow)
   var isWeekend = false
+  var isFree = false
   const dayOfWeek = date.getDay()
+  const dayOfMonth = date.getDate()
+  const monthOfYear = date.getMonth()
+  // Check if the day is weekend
   if (dayOfWeek === 6 || dayOfWeek === 0) {
     isWeekend = true
   }
+
+  // Check if is free day
+  if(dayOfMonth === 16 && monthOfYear === 8) {
+    isFree = true
+  }
+
+  if( isFree) {
+    return { isWeekend: false, options: optionsWeekend, isFree: true }
+  }
   if(cylinderFlow) {
     if (isWeekend) {
-      return { isWeekend: isWeekend, options: cylinderOptionsWeekend }
+      return { isWeekend: isWeekend, options: cylinderOptionsWeekend, isFree: false }
     }
-    return { isWeekend: isWeekend, options: cylinderOptions }
+    return { isWeekend: isWeekend, options: cylinderOptions, isFree: false }
   } else {
     if (isWeekend) {
-      return { isWeekend: isWeekend, options: optionsWeekend }
+      return { isWeekend: isWeekend, options: optionsWeekend, isFree: false}
     }
-    return { isWeekend: isWeekend, options: normalOptions }
-  }  
+    return { isWeekend: isWeekend, options: normalOptions, isFree: false }
+  }
 }
 
 
-function showScheduleLabels(isWeekend, hours) {
+function showScheduleLabels(isWeekend, hours, isFree) {
   if (hours.length <= 0) {
     document.getElementById("scheduleOutOfRangelbl").hidden = false
     document.getElementById("wekendLbl").hidden = true
+    document.getElementById("freedayLbl").hidden = true
   } else {
     document.getElementById("scheduleOutOfRangelbl").hidden = true
+    if (isFree){
+      document.getElementById("freedayLbl").hidden = false
+    } else {
+      document.getElementById("freedayLbl").hidden = true
+    }
     if (isWeekend) {
       document.getElementById("wekendLbl").hidden = false
     } else {
@@ -95,7 +114,7 @@ function populateTodaySchedule() {
   if (hours.length > 0) {
     options = hours.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   }
-  showScheduleLabels(schedule.isWeekend, hours)
+  showScheduleLabels(schedule.isWeekend, hours, schedule.isFree)
   const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
 }
@@ -112,7 +131,7 @@ function populateTomorrowSchedule() {
   var options = schedule.options.map(item => `<option value=${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}T${item.value}>${item.text}</option>`).join('\n')
   const calendar = document.getElementById("timeframe")
   calendar.innerHTML = options
-  showScheduleLabels(schedule.isWeekend, options)
+  showScheduleLabels(schedule.isWeekend, options, schedule.isFree)
 }
 
 
@@ -271,14 +290,16 @@ function getSchedule() {
  * Get discount by voucher code.
  */
 async function getDiscountByVoucherCode(phoneNumber) {
-  const field = document.getElementById("cuponCode")
-  if (field && field.value) {
-    const voucher = await checkPromocode(phoneNumber, field.value.toUpperCase()) 
-    if (voucher) {
-      voucher.code = field.value.toUpperCase()
-      return voucher
+  if(!cylinderFlow) {
+    const field = document.getElementById("cuponCode")
+    if (field && field.value) {
+      const voucher = await checkPromocode(phoneNumber, field.value.toUpperCase()) 
+      if (voucher) {
+        voucher.code = field.value.toUpperCase()
+        return voucher
+      }
     }
-  }
+  }  
   return null
 }
 
@@ -369,6 +390,9 @@ async function calculateDiscount(firstBuy, phoneNumber) {
  * @param {*} discount 
  */
 function calculateTotalOfService(quantity, discount) {
+  if(cylinderFlow) {
+    return new Number(quantity) - new Number(discount.value)
+  }
   return (new Number(quantity) + new Number(FEE)) - new Number(discount.value)
 }
 
@@ -388,7 +412,12 @@ async function showOrderSummary() {
       document.getElementById("serviceTypeValue").textContent = 'Recarga de Cilindro'  
     }
   }
-  document.getElementById("feeValue").textContent = "$" + FEE
+  if(cylinderFlow) {
+    document.getElementById("feeValue").textContent = "$" + 0.0
+  } else {
+    document.getElementById("feeValue").textContent = "$" + FEE
+  }
+    
 
   const schedule = getSchedule()
   document.getElementById("scheduleValue").textContent = schedule.day + ', ' + schedule.text
@@ -431,7 +460,7 @@ async function showOrderSummary() {
 
   document.getElementById("totalValue").textContent = "$" + total
   mixpanel.track("Llego al Resumen de Pedido")
-  sendEmail(contactData.name, contactData.phone, quantity, discountText, total, addressText, schedule.day + ', ' + schedule.text, paymentType.value)
+  //sendEmail(contactData.name, contactData.phone, quantity, discountText, total, addressText, schedule.day + ', ' + schedule.text, paymentType.value)
 }
 
 /**
@@ -870,7 +899,11 @@ async function createServiceOrder() {
     data.promocode = discount.code
   }
 
-  //ma  keRequest(data)
+  if(cylinderFlow) {
+    data.serviceType = 'c352aee9-4217-4dea-acde-7446fe7bc501'
+  }
+
+  makeRequest(data)
 
   mixpanel.track("Realizo Pedido", { "Información de Pedido": data })
   dataLayer.push({ 'event': 'realizopedido' })

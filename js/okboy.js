@@ -374,6 +374,9 @@ function getPaymentType() {
  * Get discount from cupon or discount for first buy.
  */
 async function calculateDiscount(firstBuy, phoneNumber) {
+  if(cylinderFlow) {
+    return { value: 0, byCupon: false, firstBuy } 
+  }
   const voucher = await getDiscountByVoucherCode(phoneNumber)
   if (voucher) {
     return { value: voucher.discount, byCupon: true, code: voucher.code, firstBuy }
@@ -391,7 +394,7 @@ async function calculateDiscount(firstBuy, phoneNumber) {
  */
 function calculateTotalOfService(quantity, discount) {
   if(cylinderFlow) {
-    return new Number(quantity) - new Number(discount.value)
+    return new Number(quantity)  // - new Number(discount.value)
   }
   return (new Number(quantity) + new Number(FEE)) - new Number(discount.value)
 }

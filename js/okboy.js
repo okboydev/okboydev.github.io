@@ -835,8 +835,7 @@ function registerEvent(key, data) {
 function makeRequest(data) {
   const service = getUrlService()
   const body = JSON.stringify(data)
-  console.log('BODY REQUEST: ', body)
-  
+  // console.log('BODY REQUEST: ', body)
   fetch(service.urlService, {
     mode: 'cors',
     method: 'POST',
@@ -871,7 +870,6 @@ async function createServiceOrder() {
 
   data = {
     amount: new Number(quantity * 100),
-    fee: new Number(FEE * 100),
     discount: new Number(discount.value * 100),
     serviceDate: schedule.value + '.005Z',
     paymentTypeId: paymentType.type,
@@ -902,8 +900,11 @@ async function createServiceOrder() {
     data.promocode = discount.code
   }
 
-  if(cylinderFlow) {
+  if (cylinderFlow) {
     data.serviceType = 'c352aee9-4217-4dea-acde-7446fe7bc501'
+    data.fee = 0
+  } else {
+    data.fee = new Number(FEE * 100)
   }
 
   makeRequest(data)
@@ -950,7 +951,7 @@ function sendEmail(name, phone, amount, discount, total, address, schedule, paym
     + '<b> Total a pagar: </b> $' +  total + ' <br>' 
     + '<b> Fecha y Hora: </b>' + schedule + ' <br>'
     + '<b> Forma de Pago: </b>' + paymentType + ' <br>'
-  /*
+  
 
   const service = getUrlService()
   fetch(service.urlEmail, {
@@ -969,5 +970,4 @@ function sendEmail(name, phone, amount, discount, total, address, schedule, paym
   }).then(function (response) {
     console.log(response)
   })
-  */
 }

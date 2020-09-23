@@ -463,7 +463,7 @@ async function showOrderSummary() {
 
   document.getElementById("totalValue").textContent = "$" + total
   mixpanel.track("Llego al Resumen de Pedido")
-  //sendEmail(contactData.name, contactData.phone, quantity, discountText, total, addressText, schedule.day + ', ' + schedule.text, paymentType.value)
+  sendEmail(contactData.name, contactData.phone, quantity, discountText, total, addressText, schedule.day + ', ' + schedule.text, paymentType.value)
 }
 
 /**

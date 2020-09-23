@@ -23,7 +23,8 @@ allowZipCodesPrefix = [
 '56', // México, Chalco - Texcoco
 '57', // México, Neza
 '44', // Guadalajara Jalisco
-'45'  // Zapopan Jalisco
+'45', // Zapopan Jalisco
+'76'  // Querétaro
 ] 
 
 

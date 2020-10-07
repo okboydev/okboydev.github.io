@@ -103,7 +103,7 @@ function showScheduleLabels(isWeekend, hours, isFree) {
 function populateTodaySchedule() {
   // Populate calendar when user select: today
   const currentDate = new Date()
-  const hour = currentDate.getHours() + 2
+  const hour = currentDate.getHours() + 3
   const datePart = currentDate.toLocaleDateString()
   const date = datePart.split('/')
   const schedule = getScheduleOptions(currentDate)

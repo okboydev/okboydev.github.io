@@ -28,7 +28,8 @@ const allowZipCodesPrefix = [
 ] 
 
 const cylinderAllowZipCodesPrefix = [
-  '44'
+  '44',
+  '45'
 ]
 
 function include(arr,obj) {

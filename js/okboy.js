@@ -617,7 +617,11 @@ function isValidAddress() {
   const address = getAddress()
   var zipCodeIsValid = false
   if (address.zipCode !== '') {
-    zipCodeIsValid = validateZipCode(address.zipCode)
+    if(cylinderFlow) {
+      zipCodeIsValid = validateZipCodeForCylinder(address.zipCode)
+    } else {
+      zipCodeIsValid = validateZipCode(address.zipCode)  
+    }    
     if (!zipCodeIsValid) {
       document.getElementById("invalidZipCodeText").hidden = false
     } else {

@@ -1,4 +1,4 @@
-allowZipCodesPrefix = [
+const allowZipCodesPrefix = [
 '00', // CdMx
 '01', // CdMx
 '02', // CdMx
@@ -27,6 +27,9 @@ allowZipCodesPrefix = [
 '76'  // Querétaro
 ] 
 
+const cylinderAllowZipCodesPrefix = [
+  '44'
+]
 
 function include(arr,obj) {
     return (arr.indexOf(obj) != -1);
@@ -35,4 +38,9 @@ function include(arr,obj) {
 function validateZipCode (zipCode) {
   const obj = zipCode.substring(0,2)
   return include(allowZipCodesPrefix, obj)
+}
+
+function validateZipCodeForCylinder (zipCode) {
+  const obj = zipCode.substring(0,2)
+  return include(cylinderAllowZipCodesPrefix, obj)
 }

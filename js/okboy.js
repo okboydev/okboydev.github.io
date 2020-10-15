@@ -1,6 +1,6 @@
 const ENV = 'prod'
 const DISCOUNT_FIRST_BUY = 100.0
-const FEE = 20.0
+const FEE = 0.0
 var cylinderSizeSelected = 0
 var cylinderFlow = false
 

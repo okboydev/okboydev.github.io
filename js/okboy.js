@@ -962,7 +962,7 @@ function sendEmail(name, phone, amount, discount, total, address, schedule, paym
     mode: 'cors',
     method: 'POST',
     body: JSON.stringify({
-      to: 'julio@vetta.io, didier@vetta.io, christian@vetta.io, hola@okboy.app, ventas@okboy.app, victorh@vetta.io',
+      to: 'julio@vetta.io, didier@vetta.io, christian@vetta.io, hola@okboy.app, ventas@okboy.app',
       subject: 'Cliente Potencial - OKBOY',
       message: message,
       isHtml: true

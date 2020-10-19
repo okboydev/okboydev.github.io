@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="82px" height="78px" viewBox="0 0 82 78" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>027FD62E-1F56-40F2-8162-9693287A6582</title>
+    <defs>
+        <linearGradient x1="100%" y1="32%" x2="6.61750627%" y2="68%" id="linearGradient-1">
+            <stop stop-color="#00DAFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#13015F" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="15.5993649" y="31.5096189" width="50" height="30" rx="4"></rect>
+        <filter x="-46.0%" y="-76.7%" width="192.0%" height="253.3%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.198644342   0 0 0 0 0.0461077704   0 0 0 0 0.415619339  0 0 0 0.352218094 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter2"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter2" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter2" in2="SourceAlpha" operator="out" result="shadowBlurOuter2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.35894523   0 0 0 0 0.509983392   0 0 0 0 0.981884058  0 0 0 0.295454545 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+        <circle id="path-4" cx="58" cy="56" r="3"></circle>
+        <filter x="-375.0%" y="-375.0%" width="850.0%" height="850.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.198644342   0 0 0 0 0.0461077704   0 0 0 0 0.415619339  0 0 0 0.352218094 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <circle id="path-6" cx="54" cy="56" r="3"></circle>
+        <filter x="-375.0%" y="-375.0%" width="850.0%" height="850.0%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.198644342   0 0 0 0 0.0461077704   0 0 0 0 0.415619339  0 0 0 0.352218094 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Landing-Page-V3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01-Landing" transform="translate(-42.000000, -1434.000000)">
+            <g id="Group-10" transform="translate(42.000000, 1434.000000)">
+                <g id="Group-7">
+                    <rect id="Rectangle" fill="#DFE8F4" transform="translate(29.750000, 26.000000) rotate(-30.000000) translate(-29.750000, -26.000000) " x="4.75" y="11" width="50" height="30" rx="4"></rect>
+                    <rect id="Rectangle" fill="#CCD8E5" style="mix-blend-mode: multiply;" transform="translate(26.000000, 19.504809) rotate(-30.000000) translate(-26.000000, -19.504809) " x="1" y="17.0048095" width="50" height="5"></rect>
+                    <rect id="Rectangle-Copy-11" fill="#CCD8E5" transform="translate(26.669873, 30.665064) rotate(-30.000000) translate(-26.669873, -30.665064) " x="11.669873" y="28.1650635" width="30" height="5"></rect>
+                    <rect id="Rectangle-Copy-12" fill="#F9FCFF" transform="translate(44.856406, 20.165064) rotate(-30.000000) translate(-44.856406, -20.165064) " x="40.8564065" y="17.6650635" width="8" height="5"></rect>
+                </g>
+                <g id="Rectangle">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="#8A36FF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    <use fill-opacity="0.7" fill="url(#linearGradient-1)" fill-rule="evenodd" style="mix-blend-mode: multiply;" xlink:href="#path-2"></use>
+                    <use stroke="#6640FF" stroke-width="1" xlink:href="#path-2"></use>
+                </g>
+                <g id="Oval">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill="#8A36FF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                </g>
+                <g id="Oval-Copy-8" style="mix-blend-mode: multiply;">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-6"></use>
+                    <use fill="#8A36FF" fill-rule="evenodd" xlink:href="#path-6"></use>
+                </g>
+                <circle id="Oval" stroke="#FFFFFF" style="mix-blend-mode: overlay;" cx="23" cy="48" r="2"></circle>
+                <circle id="Oval-Copy" stroke="#FFFFFF" style="mix-blend-mode: overlay;" cx="30" cy="48" r="2"></circle>
+                <circle id="Oval-Copy-4" stroke="#FFFFFF" style="mix-blend-mode: overlay;" cx="37" cy="48" r="2"></circle>
+                <circle id="Oval-Copy-5" stroke="#FFFFFF" style="mix-blend-mode: overlay;" cx="44" cy="48" r="2"></circle>
+                <circle id="Oval-Copy-6" stroke="#FFFFFF" style="mix-blend-mode: overlay;" cx="51" cy="48" r="2"></circle>
+                <circle id="Oval-Copy-7" stroke="#FFFFFF" style="mix-blend-mode: overlay;" cx="58" cy="48" r="2"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

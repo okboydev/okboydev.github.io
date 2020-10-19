@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="278px" height="484px" viewBox="0 0 278 484" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ECBC0B3F-CE85-439D-91F8-B36E8D8F5D8D</title>
+    <defs>
+        <path d="M49.5727286,0 C49.5727286,0 94.8809117,15.4262235 120.11078,67.2100131 C120.393744,67.7662905 120.671595,68.3254955 120.938536,68.8910066 C120.971719,68.961611 121.007516,69.0278238 121.040699,69.0986534 L121.040699,69.0986534 C124.854356,77.2754797 127,86.3723033 127,95.9701141 C127,131.332799 98.0696605,160 62.3823852,160 C20.5374991,160 4.42999866,123.933523 4.42999866,123.933523 C-4.66589238,102.881466 0.762255682,80 15.9830203,63.1836462 C28.0902658,49.8069779 50.2132057,25.6683704 49.5727286,0 Z M63.5816321,51.0546608 C63.9719867,66.7003549 41.9164354,84.5870359 34.5366295,92.7406653 C25.259143,102.990807 21.9505034,116.937716 27.49479,129.769818 C27.49479,129.769818 37.312864,151.753583 62.8187643,151.753583 C84.5714639,151.753583 102.205489,134.279831 102.205489,112.725098 C102.205489,106.874839 100.897715,101.32997 98.5697921,96.3486982 C98.570133,96.3485857 98.5730876,96.3459957 98.5730876,96.3459957 C98.5528595,96.3027547 98.5310407,96.2624415 98.5108126,96.219313 C98.3481933,95.8747363 98.1787553,95.5339883 98.0063629,95.1947042 C82.627759,63.6308076 63.5816321,51.0546608 63.5816321,51.0546608 Z M61.5616793,92 C61.5616793,92 72.3027669,98.494331 80.9755623,114.793714 C81.0728289,114.96873 81.1683354,115.144704 81.2600875,115.322701 C81.2714685,115.345057 81.2837881,115.36571 81.2951691,115.388066 C81.2951691,115.388066 81.2935265,115.389344 81.293409,115.389556 C82.6060967,117.961782 83.34375,120.825168 83.34375,123.846112 C83.34375,134.976772 73.3988635,144 61.1314304,144 C46.7473651,144 41.2103301,132.647802 41.2103301,132.647802 C38.0836042,126.021463 39.9495024,118.819403 45.1815968,113.526232 C49.3435249,109.315945 61.7817904,100.079376 61.5616793,92 Z" id="path-1"></path>
+        <filter x="-1.9%" y="-1.6%" width="103.7%" height="103.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="2" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.215686275   0 0 0 0 0.329411765   0 0 0 0 0.666666667  0 0 0 0.103529283 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feGaussianBlur stdDeviation="2" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.215686275   0 0 0 0 0.329411765   0 0 0 0 0.666666667  0 0 0 0.10385708 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Landing-Page-V2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Assets" transform="translate(-1105.000000, -779.000000)">
+            <g id="cilindro" transform="translate(1105.000000, 779.000000)">
+                <ellipse id="Oval-Copy-3" fill="#5098A7" opacity="0.404808408" style="mix-blend-mode: multiply;" cx="139.5" cy="465.5" rx="117.5" ry="18.5"></ellipse>
+                <ellipse id="Oval-Copy-3" fill="#5098A7" opacity="0.404808408" style="mix-blend-mode: multiply;" cx="144" cy="464" rx="79" ry="10"></ellipse>
+                <g id="Group-3">
+                    <path d="M192,0 C199.731986,-1.42034288e-15 206,6.2680135 206,14 L206.000798,74.1034978 C246.114682,76.1839481 278,109.368366 278,150 L278,367 C278,400.586672 256.213065,429.084733 226.000941,439.132436 L226,451 C226,458.731986 219.731986,465 212,465 L77,465 C69.2680135,465 63,458.731986 63,451 L63.0001046,441.713248 C27.7138887,435.142569 1,404.190966 1,367 L1,150 C1,109.368029 32.8858488,76.1833961 73.0002032,74.1034459 L73,14 C73,6.2680135 79.2680135,1.42034288e-15 87,0 L192,0 Z M170,23 L109,23 C101.268014,23 95,29.2680135 95,37 L95,37 L95,60 C95,67.7319865 101.268014,74 109,74 L109,74 L170,74 C177.731986,74 184,67.7319865 184,60 L184,60 L184,37 C184,29.2680135 177.731986,23 170,23 L170,23 Z" id="Combined-Shape" fill="#DFE8F4"></path>
+                    <path d="M147,0 L147,23 L109,23 C101.3725,23 95.1696731,29.0997524 95.003422,36.687355 L95,37 L95,60 C95,67.6275002 101.099752,73.8303269 108.687355,73.996578 L109,74 L147,74 L147,365.500016 C147.00003,403.37849 177.706599,434.08506 215.585073,434.08506 C229.491409,434.08506 243.019726,429.859225 254.407162,422.039975 C246.401039,429.666485 236.732502,435.563421 226.000941,439.132436 L226,451 C226,458.731986 219.731986,465 212,465 L77,465 C69.2680135,465 63,458.731986 63,451 L63.0001046,441.713248 C27.7138887,435.142569 1,404.190966 1,367 L1,150 C1,109.368029 32.8858488,76.1833961 73.0002032,74.1034459 L73,14 C73,6.2680135 79.2680135,1.42034288e-15 87,0 L147,0 Z" id="Combined-Shape" fill="#CCD8E5"></path>
+                    <rect id="Rectangle-Copy-27" fill="#CCD8E5" opacity="0.558244978" style="mix-blend-mode: multiply;" x="0" y="144" width="278" height="14" rx="7"></rect>
+                    <rect id="Rectangle-Copy-28" fill="#CCD8E5" opacity="0.558244978" style="mix-blend-mode: multiply;" x="0" y="372" width="278" height="14" rx="7"></rect>
+                    <rect id="Rectangle-Copy-29" fill="#ECF3FD" x="0" y="141" width="278" height="14" rx="7"></rect>
+                    <rect id="Rectangle-Copy-30" fill="#ECF3FD" x="0" y="369" width="278" height="14" rx="7"></rect>
+                    <g id="Combined-Shape-2" style="mix-blend-mode: multiply;" transform="translate(76.000000, 185.000000)">
+                        <g id="Combined-Shape">
+                            <use fill="#F1F3F6" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use stroke-opacity="0.400486233" stroke="#FFFFFF" stroke-width="0.72" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

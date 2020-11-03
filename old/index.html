@@ -1,0 +1,697 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="validations.css">
+    <link rel="stylesheet" href="grid.css">
+    <link rel="stylesheet" href="okboy.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700&family=Montserrat:wght@400;500&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/micromodal@0.4.6/dist/micromodal.min.js"></script>
+    <!-- Mixpanel -->
+    <script>
+        (function (c, a) {
+            if (!a.__SV) {
+                var b = window; try { var d, m, j, k = b.location, f = k.hash; d = function (a, b) { return (m = a.match(RegExp(b + "=([^&]*)"))) ? m[1] : null }; f && d(f, "state") && (j = JSON.parse(decodeURIComponent(d(f, "state"))), "mpeditor" === j.action && (b.sessionStorage.setItem("_mpcehash", f), history.replaceState(j.desiredHash || "", c.title, k.pathname + k.search))) } catch (n) { } var l, h; window.mixpanel = a; a._i = []; a.init = function (b, d, g) {
+                    function c(b, i) {
+                        var a = i.split("."); 2 == a.length && (b = b[a[0]], i = a[1]); b[i] = function () {
+                            b.push([i].concat(Array.prototype.slice.call(arguments,
+                                0)))
+                        }
+                    } var e = a; "undefined" !== typeof g ? e = a[g] = [] : g = "mixpanel"; e.people = e.people || []; e.toString = function (b) { var a = "mixpanel"; "mixpanel" !== g && (a += "." + g); b || (a += " (stub)"); return a }; e.people.toString = function () { return e.toString(1) + ".people (stub)" }; l = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
+                    for (h = 0; h < l.length; h++)c(e, l[h]); var f = "set set_once union unset remove delete".split(" "); e.get_group = function () { function a(c) { b[c] = function () { call2_args = arguments; call2 = [c].concat(Array.prototype.slice.call(call2_args, 0)); e.push([d, call2]) } } for (var b = {}, d = ["get_group"].concat(Array.prototype.slice.call(arguments, 0)), c = 0; c < f.length; c++)a(f[c]); return b }; a._i.push([b, d, g])
+                }; a.__SV = 1.2; b = c.createElement("script"); b.type = "text/javascript"; b.async = !0; b.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ?
+                    MIXPANEL_CUSTOM_LIB_URL : "file:" === c.location.protocol && "//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js"; d = c.getElementsByTagName("script")[0]; d.parentNode.insertBefore(b, d)
+            }
+        })(document, window.mixpanel || []);
+        mixpanel.init("96792cdf269f9f2ac6eaa7ee7affcc4f", { batch_requests: true })
+
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-PRLBWND');</script>
+    <!-- End Google Tag Manager -->
+    <script>
+        dataLayer = [];
+    </script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149262471-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149262471-3');
+    </script>
+
+    <!-- HOTJAR-->
+    <!-- Hotjar Tracking Code for https://okboy.app -->
+    <script>
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+            h._hjSettings = { hjid: 1719199, hjsv: 6 };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script'); r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '206788243864076'); 
+        fbq('track', 'PageView');
+        </script>
+        <noscript>
+        <img height="1" width="1" 
+        src="https://www.facebook.com/tr?id=206788243864076&ev=PageView
+        &noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+</head>
+
+<body>
+
+    <!-- Load Facebook SDK for JavaScript 
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v7.0'
+        });
+      };
+
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    -->
+    <!-- Your Chat Plugin code
+    <div class="fb-customerchat"
+      attribution=setup_tool
+      page_id="114532320016031"
+theme_color="#5B2AE0"
+logged_in_greeting="¡Hola!, ¿Cómo podemos ayudarte?"
+logged_out_greeting="¡Hola!, ¿Cómo podemos ayudarte?">
+    </div>
+    -->
+    
+    <!-- Google Tag Manager (noscript)     -->
+         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PRLBWND" height="0" width="0" style="display:none;visibility:hidden" data-hj-allow-iframe=""></iframe></noscript>
+    <!-- End Google Tag Manager (noscript)  -->
+
+    
+    
+    <header>
+        <div class="left">
+            <a href="#">
+                <img class="logo" src="assets/logo.png"/>
+            </a>
+        </div>
+        <div class="right">
+            <button onclick="createOrder()">Pide tu gas!</button>
+        </div>
+    </header>
+    <div id="hero">
+        <div class="cont">
+            <div class="left">
+                <div class="fix"></div><div class="cta">
+                    <h1 style="text-transform:uppercase">Te conectamos con los mejores repartidores de gas en CDMX, Área Metropolitana y ahora en Guadalajara</h1>
+                    <p>Olvídate de los malos tratos y retrasos, okboy trabaja solo con los mejores repartidores de las mejores marcas. 
+                        Agenda hoy tu servicio y aprovecha las promociones que tenemos para ti.</p>
+                    
+                    <p>Descarga nuestra app disponible para Android y IOS.</p>
+
+                    <div class="dstore">
+                        <a href="https://play.google.com/store/apps/details?id=app.okboy.cliente" target="_blank"><img onclick="mixpanel.track('Click boton descarga android')" src="assets/gplay.png" width="160"></a>
+                        <a href="https://apps.apple.com/us/app/okboy/id1502734350?l=es&ls=1" target="_blank"><img onclick="mixpanel.track('Click boton descarga ios')" src="assets/astore.png" width="160"/></a>
+                    </div>
+                    <br>
+                    <p>O si lo prefieres, puedes realizar tu pedido de inmediato:</p>
+                    <button onclick="createOrder()">Haz tu pedido aquí</button>
+                </div>
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    <div id="note">
+        🔥🔥🔥 Servicio disponible en CDMX, Área Metropolitana y GDL🔥🔥🔥
+    </div>
+    <!--
+    <div id="apps">
+        <h2>El control de tu servicio de gas en una app</h2>
+        <div class="dstore"> -->
+            <!-- MIXPANEL: Registrar las posibles descargas de en tienda.  -->
+        <!--   
+            <a href="https://apps.apple.com/us/app/okboy/id1502734350?l=es&ls=1" target="_blank"><img onclick="mixpanel.track('Click boton descarga ios')" src="assets/astore.png"/></a>
+            <a href="https://play.google.com/store/apps/details?id=app.okboy.cliente" target="_blank"><img onclick="mixpanel.track('Click boton descarga android')" src="assets/gplay.png"></a>
+        </div>
+        <div class="thep">
+            <p>O si lo prefieres&nbsp;<span class="service">solicita tu servicio</span>&nbsp;en este momento</p>
+        </div>
+    </div>
+    -->
+    <div id="howitworks">
+        <div class="container">
+            <div class="row">
+                <div class="eight columns offset-by-two">
+                    <h2>Tan sencillo como envíar un whatsapp y en menos de 1 minuto</h2>
+                </div>
+            </div>
+            <div class="row" style="margin-top:60px">
+                <div class="one-third column">
+                    <div class="thumb" style="background-image: url('assets/Agenda_tu_servicio_en_la_app_o_web.png');"></div>
+                    <div class="title">Agenda tu servicio en la web / app</div>
+                    <div class="info"><p>Tú eliges el monto, día y hora. Sabemos la importancia de tu tiempo por lo que nuestro servicio siempre llegará puntual. </p></div>
+                </div>
+                <div class="one-third column">
+                    <div class="thumb" style="background-image: url('assets/Repartidor_mas_cercano.png');"></div>
+                    <div class="title">Te conectamos con el repartidor más cercano</div>
+                    <div class="info"><p>Reclutamos a los mejores repartidores de las principales gaseras de México para asegurar un servicio 5 estrellas.</p></div>
+                </div>
+                <div class="one-third column">
+                    <div class="thumb" style="background-image: url('assets/Paga_en_casa.png');"></div>
+                    <div class="title">Paga, sigue y califica tu servicio en la app</div>
+                    <div class="info"><p>Puedes seguir tu orden en tiempo real, elegir la forma de pago y calificar tu servicio todo desde la app.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal micromodal-slide" id="createorder" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <main class="modal__content" id="modal-1-content">
+                    <div class="left">
+                        <div class="logo">
+                            <img src="assets/ok.png"/>
+                        </div>
+                        <div id="lsone" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Tipo de Servicio</span>
+                        </div>
+                        <div id="lstwo" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Cantidad de Gas</span>
+                        </div>
+                        <div id="lsthree" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Datos de Contacto</span>
+                        </div>
+                        <div id="lsfour" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">A dónde lo llevamos</span>
+                        </div>     
+                        <div id="lsfive" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Cúando lo llevamos</span>
+                        </div>                    
+                        <div id="lssix" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Metodo de Pago</span>
+                        </div>
+                        <div id="lsseven" class="step">
+                            <span class="icon"><img src="assets/arrow.png"></span><span class="title">Confirmación de Pedido</span>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="fix"></div>
+                        <div class="contie">
+                            <div id="ms" class="sections">
+                                <div id="mszero" class="section">
+                                    <div class="fix"></div><div class="inside">
+                                        <img src="assets/logo.png"/>
+                                        <p>
+                                            <span class="tit">Te conectamos con los mejores repartidores de Gas de CDMX y Área Metropolitana.</span><br>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="msone" class="section">
+                                    <div class="fix"></div><div class="inside" id="serviceType">
+                                        <span class="tit">¿Qué servicio de gas necesitas?</span><br>
+
+                                        <input class="card" type="radio" id="stationary" name="service" value="stationary" aria-hidden="true">
+                                        <label class="card service" for="stationary">
+                                            <img src="assets/estacionario-circle.png">
+                                            <b>Estacionario</b>
+                                        </label>
+                                        <input class="card" type="radio" id="cylinder" name="service" value="cylinder" aria-hidden="true">
+                                        <label class="card service" for="cylinder">
+                                            <img src="assets/cilindro-circle.png">
+                                            <b>Cilindro</b>
+                                        </label>
+                                        <br> <br>
+                                        <div style="text-align: left;" hidden id="serviceTypeLabel">
+                                            <span class="tit contactou qsection">No eres tú, somos nosotros</span>
+                                            <span class="lit">Por el momento no contamos con cobertura para cilindro, esperemos en el futuro poder contar con el servicio. </span>
+                                            <span class="lit">¿Quieres recibir una notificación? Dejanos tu mail.</span>
+                                            <input class="name" type="email" placeholder="some@domain.com" aria-hidden="true" id="email"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="mstwo" class="section">
+                                    <div class="fix"></div><div class="inside" id="quantity">
+                                        <div id="stationarySection">
+                                            <span class="tit" style="font-size: 1.25em;">¿Cuánto necesitas?</span><br>
+                                            <span class="name">$</span>
+                                            <input type="number" placeholder="400" aria-hidden="true" id="amount" maxlength="4" minlength="3" min="400" max="5000" value="400"/><br>
+                                            <span style="opacity: .8;font-size: .85em;">Monto minímo: $400</span><br>
+                                            <input class="card" type="radio" id="qty500" name="qty" value="500" aria-hidden="true">
+                                            <label class="card" for="qty500">$500</label>
+                                            <input class="card" type="radio" id="qty700" name="qty" value="700" aria-hidden="true">
+                                            <label class="card" for="qty700">$700</label>
+                                            <input class="card" type="radio" id="qty1000" name="qty" value="1000" aria-hidden="true">
+                                            <label class="card" for="qty1000">$1000</label>
+                                            <input class="card" type="radio" id="qty2000" name="qty" value="2000" aria-hidden="true">
+                                            <label class="card" for="qty2000">$2000</label>
+                                            <br/>
+                                        </div>
+
+                                        <div id="cylinderSection" hidden>
+                                            <span class="tit" style="font-size: 1.25em;">¿De qué tamaño lo necesitas?</span><br>    
+                                            <input class="card" type="radio" id="cylinder20" name="qty" value="364" aria-hidden="true">
+                                            <label class="card" for="cylinder20">20 Kg</label>
+                                            <input class="card" type="radio" id="cylinder30" name="qty" value="546" aria-hidden="true">
+                                            <label class="card" for="cylinder30">30 kg</label>
+                                            <br/>
+                                            <span style="opacity: .8;font-size: .85em;">Este servicio solo esta disponible en <b>Guadalajara</b>, estamos trabajando para llegar a más lugares.</span><br>
+                                            <br/>
+                                            <span style="font-weight: 600;" id="cylinderPriceText" hidden>Precio:</span>&nbsp;<span id="cylinderPrice"></span><br>
+                                            <br/> <br/>
+                                        </div>
+                                        
+                                        <span class="tit" style="font-size: 1.25em;">¿Tienes un cupón?, ingresa el código aquí:</span>
+                                        <input class="name" type="text" placeholder="100CDMX" aria-hidden="true" id="cuponCode"/>
+                                    </div>
+                                </div>
+                                <div id="msthree" class="section">
+                                    <div class="fix"></div><div class="inside" id="contact">
+                                        <span class="tit contactou qsection">Datos de contacto:</span><br>
+                                        <div style="text-align: left;">
+                                            <span class="name">Tu nombre:</span><br>
+                                            <input class="name" type="text" placeholder="Ej: Juan" aria-hidden="true" id="name"/>
+                                            <span class="phone">Tú número celular a 10 dígitos.:</span><br>
+                                            <input class="phone" type="tel" placeholder="Ej: 5517354618" aria-hidden="true" id="phone" maxlength="10" minlength="10"/>
+                                            <p style="opacity: 1.08;font-size: .85em;">Te enviaremos notificaciones por Whatsapp para darle seguimiento a tu servicio.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="msfour" class="section">
+                                    <div class="fix"></div><div class="inside" id="contact">
+                                        <span class="tit contactou qsection">¿A dónde lo llevamos?</span>
+                                        <div style="text-align: left;">
+                                            <span class="phone">Dirección:</span>
+                                            <input id="address" class="phone" type="text" placeholder="Ej: Campos Elisesos 322" aria-hidden="true"/>
+                                            <span class="phone">Código Postal:</span>
+                                            <input type="text" id="zipCode" class="phone" type="text" aria-hidden="true" maxlength="5" minlength="5" style="width: 25%" placeholder="Ej: 06600"/>
+                                            <input type="hidden" id="latitude" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="longitude" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="street" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="state" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="locality" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="sublocality" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="streetNumber" class="phone" type="text" aria-hidden="true"/>
+                                            <input type="hidden" id="addressIsFix" class="phone" type="text" aria-hidden="true" value="false"/>
+                                            <br/>
+                                            <span class="phone">Comentarios o referencias:</span>
+                                            <input id="reference" class="phone" type="text" placeholder="Ej: Fachada Azul" aria-hidden="true"/>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <span class="phone" id="cleanAddress" style="color:blue; text-decoration: underline blue">Limpiar</span>
+
+                                        </div>
+                                        <span class="lit" id="invalidZipCodeText" hidden>Por el momento no contamos con cobertura en tu localidad, estamos trabajando para expandir nuestra cobertura.</span>
+                                    </div>
+                                </div>
+                                <div id="msfive" class="section">
+                                    <div class="fix"></div><div class="inside" id="contact">
+                                        <span class="tit contactou qsection">¿Cuándo lo necesitas?</span><br>
+                                        <input class="card" type="radio" id="hoy" name="day" value="{{hoy}}" aria-hidden="true">
+                                        <label class="card" for="hoy">Hoy</label>
+                                        <input class="card" type="radio" id="manana" name="day" value="{{manana}}" aria-hidden="true">
+                                        <label class="card" for="manana">Mañana</label>
+                                        <span class="tit contactou qsection">¿En que horario?</span>                                        
+                                        <select id="timeframe" name="timeframe" aria-hidden="true">
+                                            <option>Selecciona un día</option>
+                                        </select>
+                                        <input type="hidden" id="dayOfService" class="phone" type="text" aria-hidden="true"/><br/>
+                                        <span class="lit" id="scheduleOutOfRangelbl" hidden><b>:'( El día de hoy ya no tenemos horarios disponibles, pero puedes seleccionar un horario para mañana</b></span>
+                                        <span class="lit" id="wekendLbl" hidden><b>Este fin de semana estamos atendiendo muchos pedidos por lo que tu servicio estará sujeto a disponibilidad. Nos comunicaremos contigo pronto.</b></span>
+                                        <span class="lit" id="freedayLbl" hidden><b>Ups!!! en estas fiestas patrias estamos teniendo mucha demanda, por lo que tu servicio esta sujeto a disponibilidad. No te preocupes estamos haciendo todo lo posible para llevarte tu gas. Nos comunicaremos contigo pronto.</b></span>
+
+                                    </div>
+                                </div>     
+                                <div id="mssix" class="section">
+                                    <div class="fix"></div><div class="inside" id="paymentType">
+                                        <span class="tit">Elige una forma de pago:</span><br>
+                                        <input class="card" type="radio" id="cash" name="method" value="cash" aria-hidden="true">
+                                        <label class="card" for="cash">Efectivo</label>
+                                        <input class="card" type="radio" id="card" name="method" value="card" aria-hidden="true">
+                                        <label class="card" for="card">Terminal</label><br><br>
+                                        <p style="opacity: .8;font-size: .85em;">Nuestras unidades cuenta con terminal para procesar los pagos con tarjeta</p>
+                                    </div>
+                                </div>
+                                <div id="msseven" class="section">
+                                    <div class="fix"></div><div class="inside" style="text-align: left;">
+                                        <span class="tit" style="font-size: 1.3em">Ya casi, verifica tu pedido:</span><br> <br>
+                                        <span style="font-weight: 600;">Servicio:</span>&nbsp;<span id="serviceTypeValue"></span><br>
+                                        <span style="font-weight: 600;">Cuando:</span>&nbsp;<span id="scheduleValue"></span><br>
+                                        <span style="font-weight: 600;">Cantidad:</span>&nbsp;<span id="quantityValue"></span><br>
+                                        <span style="font-weight: 600;">Descuento:</span>&nbsp;<span id="discountValue"></span><br>
+                                        <span style="font-weight: 600;">Comisión por servicio:</span>&nbsp;<span id="feeValue"></span><br>
+                                        <span style="font-weight: 600;">Total a pagar:</span>&nbsp;<span id="totalValue"></span><br>
+                                        <br>
+                                        <span style="font-weight: 600;">Nombre:</span>&nbsp;<span id="nameValue"></span><br>
+                                        <span style="font-weight: 600;">Teléfono:</span>&nbsp;<span id="phoneValue"></span><br>
+                                        <span style="font-weight: 600;">Dirección:</span>&nbsp;<span id="addressValue"></span><br>
+                                        <span style="font-weight: 600;">Forma de Pago:</span>&nbsp;<span id="paymentTypeValue"></span><br><br>
+                                        <span style="font-weight: 600;">Haz click en CONTINUAR para confirmarlo.</span><br>
+                                    </div>
+                                </div>
+                                <div id="mseight" class="section">
+                                    <div class="fix"></div><div class="inside">
+                                        <style>
+                                            .inncircle{
+                                                display: block;
+                                                width: 180px;
+                                                height: 180px;
+                                                background-image: url(assets/map-bg.png);
+                                                background-size: 600%;
+                                                background-position: center center;
+                                                margin: auto;
+                                                margin-bottom: 30px;
+                                                background-position: center center;
+                                                background-size: 800%;
+                                                background-repeat: none;
+                                                border-radius: 180px;
+                                                border: 1px solid rgb(91,42,224);
+                                                overflow: hidden;
+                                                position: relative;
+                                            }
+                                            .inncircle img{
+                                                width: 100%;
+                                                -webkit-animation:spin 3s linear infinite;
+                                                -moz-animation:spin 3s linear infinite;
+                                                animation:spin 3s linear infinite;
+                                            }
+
+                                            @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+                                            @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+                                            @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+                                        </style>
+                                        <div class="inncircle">
+                                            <img src="assets/radar.png">
+                                        </div>
+                                        <span class="tit">Estamos creando tu pedido</span><br>
+                                    </div>
+                                </div>
+                                <div id="msnine" class="section">
+                                    <div class="fix"></div><div class="inside">
+                                        <img src="assets/ok.png" height="160"/><br>
+                                        <span class="tit">¡Tu pedido ha sido registrado!</span><br>
+                                        <p>Te contactaremos antes de la hora de tu servicio para confirmarlo.</p>
+                                        <p>Evita la confirmación y descarga la app para tu próximo servicio.</p>
+                                        <button id= "closebutton" onclick="MicroModal.close('createorder');" aria-hidden="true">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="navi">
+                                <button id="backbutton" class="bnb off" onclick="toPREV()">Regresar</button>
+                                <button id="nextbutton" class="bnb next" onclick="toNEXT()">Continuar</button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var step = 0
+
+        removeonLSELEMENTS = function(){
+            document.getElementById("lsone").classList.remove('on');
+            document.getElementById("lstwo").classList.remove('on');
+            document.getElementById("lsthree").classList.remove('on');
+            document.getElementById("lsfour").classList.remove('on');
+            document.getElementById("lsfive").classList.remove('on');
+            document.getElementById("lssix").classList.remove('on');
+            document.getElementById("lsseven").classList.remove('on');
+        }
+        toZero = function(){
+            console.log('toZero')
+            document.getElementById("backbutton").classList.remove('on');
+            document.getElementById("backbutton").classList.add('off');
+        }
+        toOne = function(){
+            console.log('toOne')
+            document.getElementById("lsone").classList.add('on');
+            document.getElementById("backbutton").classList.remove('off');
+            document.getElementById("backbutton").classList.add('on');
+            document.getElementById("ms").style.marginTop = "-420px";
+        }
+        toTwo = function(){
+            console.log('toTwo')
+            document.getElementById("lstwo").classList.add('on');
+            document.getElementById("ms").style.marginTop = "-840px";
+        }
+        toThree = function(){
+            console.log('toThree')
+            document.getElementById("lsthree").classList.add('on');
+            document.getElementById("ms").style.marginTop = "-1260px";
+        }
+        toFour = function(){
+            console.log('toFour')
+            document.getElementById("lsfour").classList.add('on');
+            document.getElementById("ms").style.marginTop = "-1680px";
+        }
+        toFive = function(){
+            console.log('toFive')
+            document.getElementById("lsfive").classList.add('on');
+            document.getElementById("ms").style.marginTop = "-2100px";
+        }
+        toSix = function(){
+            console.log('toSix')
+            document.getElementById("lssix").classList.add('on');
+            document.getElementById("ms").style.marginTop = "-2520px";
+        }
+        toSeven = function(){
+            console.log('toSeven')
+            document.getElementById("ms").style.marginTop = "-2940px";
+        }
+        toEight = function(){
+            console.log('toEight')
+            document.getElementById("ms").style.marginTop = "-3360px";
+        }
+        toNine = function(){
+            console.log('toEight')
+            document.getElementById("ms").style.marginTop = "-3780px";
+        }
+        toPREV = function(){
+            if (step == 0){
+                document.getElementById("ms").style.marginTop = "0px";
+            }
+            else if (step == 1){
+                step = step - 1;
+                removeonLSELEMENTS();
+                document.getElementById("ms").style.marginTop = "0px";
+                toZero();
+            }
+            else if (step == 2){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toOne();
+            }
+            else if (step == 3){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toTwo();
+            }
+            else if (step == 4){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toThree();
+            }
+            else if (step == 5){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toFour();
+            }
+            else if (step == 6){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toFive();
+            }
+            else if (step == 7){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toSix();
+            }
+            else if (step == 8){
+                step = step - 1;
+                removeonLSELEMENTS();
+                toSeven();
+            }
+        }
+        toNEXT = function(){
+            if (step == 0){
+                // Mostrar oferta.
+                step = step + 1;
+                toOne();
+                // Se elimina registro de evento pues ya no es necesario registrarlo
+                // MIXPANEL: Registrar cuando el usuario hace clic en siguiente, despues de mirar el copy del inicio del formulario.
+                //mixpanel.track("Miro copy de inicio de pedido")
+            }
+            else if (step == 1){
+                // Seleccionar tipo de recarga
+                if( isValidStep(1) ) {
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toTwo();
+                }                                
+            }
+            else if (step == 2){
+                // Seleccionar cantidad
+                if ( isValidStep(2) ) {
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toThree();
+                }                
+            }
+            else if (step == 3){
+                console.log("PASO 3")
+                if( isValidStep(3) ) {
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toFour();
+                }                
+            }
+            else if (step == 4){
+                if( isValidStep(4) ) {
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toFive();
+                }
+                
+            }
+            else if (step == 5){
+                if(isValidStep(5)) {
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toSix();
+                }                
+            }
+            else if (step == 6){
+                if(isValidStep(6)) {
+                    showOrderSummary()
+                    step = step + 1;
+                    removeonLSELEMENTS();
+                    toSeven();
+                }                
+            }
+            else if (step == 7){
+                createServiceOrder();
+                removeonLSELEMENTS();
+                document.getElementById("backbutton").classList.remove('on');
+                document.getElementById("backbutton").classList.add('off');
+                document.getElementById("nextbutton").classList.remove('on');
+                document.getElementById("nextbutton").classList.add('off');
+                toEight();
+                setTimeout(toNine, 4500);
+                step = 9;
+            }
+        }
+    </script>
+
+
+
+<script>
+    inicioFormulario = function(){
+        // MIXPANEL: Registrar cuando el usuario inicia el formulario de pedido.
+        mixpanel.track("Se inicio el formulario de pedido");
+        dataLayer.push({'event': 'inicioformulariodepedido'});
+        // Ocultar el copy de inicio
+        toNEXT()   
+    }
+    createOrder = function(){
+        MicroModal.show('createorder',{
+            openTrigger: inicioFormulario(), // [3]
+            disableScroll: true, // [6]
+            disableFocus: false, // [7]
+        });        
+    }
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT_SEyU1vK9hOiGQuCgyBnUnz283T09kw&amp;libraries=places"></script>
+    
+<script>
+    var defaultBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(-33.8902, 151.1759),
+    new google.maps.LatLng(-33.8474, 151.2631));
+
+    var input = document.getElementById('address');
+    var options = {
+    bounds: defaultBounds,
+    types: ['geocode',],
+    componentRestrictions: {country:'mx'}
+    };
+
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    var place = autocomplete.getPlace();
+    // console.log(place.address_components)
+    // console.log(place.geometry.location)
+    for (var i = 0; i < place.address_components.length; i++) {
+      for (var j = 0; j < place.address_components[i].types.length; j++) {
+        if(place.address_components[i].types[j] == "street_number") {
+            document.getElementById('streetNumber').value = place.address_components[i].long_name;
+        } else if(place.address_components[i].types[j] == "route") {
+            document.getElementById('street').value = place.address_components[i].long_name;
+        } else if(place.address_components[i].types[j] == "sublocality") {
+            document.getElementById('sublocality').value = place.address_components[i].long_name;   
+        } else if(place.address_components[i].types[j] == "locality") {
+            document.getElementById('locality').value = place.address_components[i].long_name;   
+        } else if(place.address_components[i].types[j] == "administrative_area_level_1") {
+            document.getElementById('state').value = place.address_components[i].long_name;   
+        } else if (place.address_components[i].types[j] == "postal_code") {
+          document.getElementById('zipCode').value = place.address_components[i].long_name;
+          document.getElementById('addressIsFix').value = 'false'
+        }  
+      }
+    }
+    if(place.geometry && place.geometry.location) {
+        document.getElementById('latitude').value = place.geometry.location.lat();
+        document.getElementById('longitude').value = place.geometry.location.lng();
+    }
+    
+
+  })
+</script>
+<script src="./js/okboy.js"></script>
+<script src="./js/zipcodes.js"></script>
+
+
+</body>
+</html>
